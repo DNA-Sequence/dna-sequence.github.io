@@ -1,0 +1,32 @@
+{
+  "menu": {
+    "new": "New",
+    "open": "Open",
+    "delete": "Delete"
+  },
+  "headAlign": {
+  	"Align": "Align",
+  	"Date": "Date",
+  	"Type": "Type"
+  },
+  "pageNew": {
+  	"NewAlign": "New Align",
+  	"NUCLEOTIDE": "NUCLEOTIDE",
+  	"PROTEIN": "PROTEIN",
+  	"SequenceA": "Sequence A",
+  	"SequenceB": "Sequence B",
+  	"METHOD": "METHOD",
+  	"Global": "Global",
+  	"Local": "Local",
+  	"Gap": "Gap Penalty",
+  	"Match": "Match",
+  	"Mismatch": "Mismatch",
+  	"Close": "Close",
+  	"Save": "Save"
+  },
+  "openAligh": {
+  	"Back": "Back",
+  	"SCALE": "SCALE",
+  	 "ResultAlign": "RESULT ALIGN"
+  }
+}

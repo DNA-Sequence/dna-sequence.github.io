@@ -1,0 +1,19 @@
+
+.navbar {
+	margin: 0px;
+	bottom: 
+}
+
+body {
+	background-color: #e7e7e7;
+	overflow: hidden;
+}
+
+.panel {
+	height: 100%; 
+	overflow-x: scroll;
+}
+
+.lineSelect{
+	background-color: #C5C5C5;
+}

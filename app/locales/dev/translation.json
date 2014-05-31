@@ -1,0 +1,18 @@
+{
+  "menu": {
+    "new": "New",
+    "open": "Open",
+    "delete": "Delete"
+  },
+  "headAlign":{
+  	"Align": "Align",
+  	"Date": "Date",
+  	"Type": "Type"
+  },
+  "pageNew"{
+  	"NewAlign": "New Align",
+  	
+  },
+  "headAlign":{
+  }
+}
