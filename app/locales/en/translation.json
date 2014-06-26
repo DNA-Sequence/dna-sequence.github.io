@@ -26,7 +26,8 @@
   },
   "openAligh": {
   	"Back": "Back",
-  	"SCALE": "SCALE",
-  	 "ResultAlign": "RESULT ALIGN"
+  	"SCALE": "Scale",
+    "SCORE": "Score",
+  	"ResultAlign": "RESULT ALIGN"
   }
 }

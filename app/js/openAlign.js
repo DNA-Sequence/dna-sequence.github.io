@@ -1,22 +1,25 @@
 //var urlDefault = "http://localhost:8080/DNA-HTML5/";
+
 var urlDefault = "";
 
-var refreshIntervalStart = null;
+//var refreshIntervalStart = null;
 
-function InputResultAlign() {
+var Align = function(){
 
-}
-
-InputResultAlign.prototype = {
-	idMatrix : 0,
-	matrix : null,
-	connecteds : []
 };
 
-var dados;
+Align.prototype = {
+    name : "",
+    connect : null,
+    result : null
+};
+
+var listAlign = new Array();
+
+var calculation = null;
 
 function start() {
-	clearInterval(refreshIntervalStart);
+//	clearInterval(refreshIntervalStart);
 	mountPossibilityResult();
 	openRestJson();
 
@@ -35,27 +38,39 @@ function start() {
 
 function mountPossibilityResult() {
 	var possibilityResult = document.getElementById('possibilityResult');
-	possibilityResult.appendChild(appPossibilityResult([ 'N', 'W', 'NW' ], "[ 'N', 'W', 'NW' ]", "#00FF99"));
-	possibilityResult.appendChild(appPossibilityResult([ 'W', 'N', 'NW' ], "[ 'W', 'N', 'NW' ]", "#FF0099"));
-	possibilityResult.appendChild(appPossibilityResult([ 'N', 'NW', 'W' ], "[ 'N', 'NW', 'W' ]", "#0099FF"));
-	possibilityResult.appendChild(appPossibilityResult([ 'W', 'NW', 'N' ], "[ 'W', 'NW', 'N' ]", "#FF9900"));
-	possibilityResult.appendChild(appPossibilityResult([ 'NW', 'N', 'W' ], "[ 'NW', 'N', 'W' ]", "#9900FF"));
-	possibilityResult.appendChild(appPossibilityResult([ 'NW', 'W', 'N' ], "[ 'NW', 'W', 'N' ]", "#99FF00"));
+	possibilityResult.appendChild(appPossibilityResult([ 'N', 'W', 'NW' ], "1: ", "#00FF99"));
+	possibilityResult.appendChild(appPossibilityResult([ 'W', 'N', 'NW' ], "2: ", "#FF0099"));
+	possibilityResult.appendChild(appPossibilityResult([ 'N', 'NW', 'W' ], "3: ", "#0099FF"));
+	possibilityResult.appendChild(appPossibilityResult([ 'W', 'NW', 'N' ], "4: ", "#FF9900"));
+	possibilityResult.appendChild(appPossibilityResult([ 'NW', 'N', 'W' ], "5: ", "#9900FF"));
+	possibilityResult.appendChild(appPossibilityResult([ 'NW', 'W', 'N' ], "6: ", "#99ff00"));
 }
 
-function appPossibilityResult(connect, text, cor) {
+function appPossibilityResult(connect, text) {
 	var p = document.createElement("p");
 	p.innerHTML = text;
-	p.onclick = function() {
-		clickPossibilityResult(connect, cor);
-	};
+
+    var align = new Align();
+    align.connect = connect;
+    align.name = text;
+    listAlign.push(align);
+
+    p.onclick = function() {
+        clickPossibilityResult(align);
+    };
+
+    setTimeout( function (){
+        var data = openRestAligh(connect);
+        align.result = data;
+        p.innerHTML = p.innerHTML + "Score=" + data.score;
+     }, 0);
 
 	return p;
 }
 
-function clickPossibilityResult(connect, cor) {
+function clickPossibilityResult(align) {
 	$("rect[cand='true']").attr('class', 'alignCandidate');
-	openRestAligh(connect, cor);
+	feedsMatrixAlign(align.result);
 }
 
 function testAlign(d, cor) {
@@ -65,7 +80,7 @@ function testAlign(d, cor) {
 		$("rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'align');
 
 	}
-	debugger;
+
 	$("#tableResult").html(mountTableResult(d.resultSequenceA, d.resultSequenceB));
 }
 
@@ -82,7 +97,7 @@ function mountTableResult(resultSequenceA, resultSequenceB) {
 	htmlStr += "</tr>";
 
 	htmlStr += "<tr>";
-	var i = 0;
+	i = 0;
 	for (i = 0; i < resultSequenceA.length; i++) {
 		htmlStr += "<td>";
 		htmlStr += resultSequenceB[i];
@@ -114,11 +129,11 @@ function testMatrix(d) {
 
 	var htmlSVG = "";
 
-	$('svg') //
-	.attr("width", (40 + (jsonmatrix.length * 10))) //
-	.attr("height", (100 + (jsonmatrix[0].length * 10))) //
-	.attr("vwidth", jsonmatrix.length) //
-	.attr("vheight", jsonmatrix[0].length);
+	$('svg').attr("width", (40 + (jsonmatrix.length * 10)));
+	$('svg').attr("height", (100 + (jsonmatrix[0].length * 10)));
+
+	$('svg').attr("vwidth", jsonmatrix.length);
+	$('svg').attr("vheight", jsonmatrix[0].length);
 
 	for (i = 0; i < sequenceA.length; i++) {
 		htmlSVG += '<text class="textSeqA" vx=' + i + ' x="' + (20 + ((i + 1) * 10)) + '" y="10" width="8" height="8" >' + sequenceA[i] + '</text>';
@@ -146,8 +161,6 @@ function testMatrix(d) {
 	$('text').css('font', '10px sans-serif;');
 
 	scaleMatrix(20);
-
-	// openRestAligh([ "N", "NW", "W" ]);
 }
 
 function scaleMatrix(value) {
@@ -205,7 +218,14 @@ function openRestJson() {
 
 	console.log(JSON.stringify(filter));
 
-	var data = JSON.parse(DnaGWT.calculationGlobalLocal(JSON.stringify(filter)));
+    calculation = dna.CalculationFactory.createCalculation(filter);
+    calculation.calculationNode();
+    calculation.findAligns();
+
+
+//	var data = JSON.parse(DnaGWT.calculationGlobalLocal(JSON.stringify(filter)));
+
+    var data  = calculation.getOutputAlign();
 	testMatrix(data);
 	localStorage.matrix = JSON.stringify(data);
 
@@ -226,49 +246,64 @@ function openRestJson() {
 
 }
 
+function feedsMatrixAlign(outputResultAlign){
+    testAlign(outputResultAlign);
+
+    $("#matrix").height("100%");
+    $("#matrix").height($("#matrix").height() - $(".menuDown").height() - $(".menuUp").height());
+
+}
+
 function openRestAligh(connecteds, cor) {
 	var hash = window.location.hash;
 	hash = hash.replace("#", "");
 
 	var matrix = JSON.parse(localStorage.matrix);
 
-	var alignGlobal = new InputResultAlign();
+	var alignGlobal = new dna.InputResultAlign();
 
 	alignGlobal.idMatrix = parseInt(hash, 10);
 	alignGlobal.matrix = matrix[0];
 	alignGlobal.connecteds = connecteds;
 
-	var data = JSON.parse(DnaGWT.findAlignGlobal(JSON.stringify(alignGlobal)));
-	testAlign(data, cor);
+    calculation.setInputResultAlign(alignGlobal);
+    calculation.findAlign();
 
-	// $.ajax({
-	// contentType : "application/json",
-	// dataType : "json",
-	// type : "POST",
-	// url : urlDefault + "rest/DNA/findAlignGlobal",
-	// data : JSON.stringify(alignGlobal),
-	// success : function(data) {
-	// testAlign(data, cor);
-	// // localStorage["matrix"] = JSON.stringify(data);
-	// console.log(data);
-	// }
-	// });
+//	var data = JSON.parse(DnaGWT.findAlignGlobal(JSON.stringify(alignGlobal)));
+    var data = calculation.getOutputResultAlign();
 
-	$("#matrix").height("100%");
-	$("#matrix").height($("#matrix").height() - $(".menuDown").height() - $(".menuUp").height());
+    return data;
 }
 
 $(function() {
-	refreshIntervalStart = setInterval(function() {
-		try {
-			if (DnaGWT) {
-				$('link[href*="clean"]').remove();
-				start();
-			}
+    var widthDefault = $("#matrix").width();
 
-		} catch (e) {
-		}
-	}, 100);
+    $("#btnScore").click( function(){
+        $("#possibilityResult").toggle(function (){
+            $("#col-matrix").toggleClass("col-md-9");
+            if( $(this).is(":hidden") ) {
+                $("#matrix").width($(".row").width() - 20);
+            } else {
+                $("#matrix").width(widthDefault);
+            }
+        } );
+    } );
+
+    $('link[href*="clean"]').remove();
+
+    setTimeout(function(){
+        start();
+    } ,0);
+
+//	refreshIntervalStart = setInterval(function() {
+//		try {
+//			if (DnaGWT) {
+//
+//			}
+//
+//		} catch (e) {
+//		}
+//	}, 100);
 	// testeJson();
 });
 

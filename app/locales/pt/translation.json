@@ -27,6 +27,7 @@
   "openAligh": {
   	"Back": "Voltar",
   	"SCALE": "Escala",
+    "SCORE" : "Score"
   	 "ResultAlign": "Resultado alinhamento"
   }
 }
