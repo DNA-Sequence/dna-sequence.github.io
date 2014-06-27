@@ -474,7 +474,7 @@ if(!window.dna) {
         Extends : window.dna.AbstractCalculation,
         initialize: function(_inputAlign){
             this.parent(_inputAlign);
-            this.calculationNodeGlobal = function calculationNodeGlobal(_nodeController) {
+            this.calculationNodeGlobal = function (_nodeController) {
                 this.setGaps();
                 this.saveValue(_nodeController);
             };
@@ -498,60 +498,59 @@ if(!window.dna) {
 
                 var connecteds = [];
 
-                if (nnw === null && nn === null && nw === null) {
-                    _nodeController.getNode().value = (0);
-                    return;
-                }
+                try{
+                    if (nnw === null && nn === null && nw === null) {
+                        _nodeController.getNode().value = (0);
+                        return;
+                    }
 
-                if (nw === null) {
-                    _nodeController.getNode().value = (nn.getNode().value + this.gap);
-                    connecteds.push(Connected.N);
-                    return;
-                }
+                    if (nw === null) {
+                        _nodeController.getNode().value = (nn.getNode().value + this.gap);
+                        connecteds.push(Connected.N);
+                        return;
+                    }
 
-                if (nn === null) {
-                    _nodeController.getNode().value = (nw.getNode().value + this.gap);
-                    connecteds.push(Connected.W);
-                    return;
-                }
+                    if (nn === null) {
+                        _nodeController.getNode().value = (nw.getNode().value + this.gap);
+                        connecteds.push(Connected.W);
+                        return;
+                    }
 
-                var valueN = nn.getNode().value + this.gap;
-                var valueW = nw.getNode().value + this.gap;
-                var valueNW = 0;
+                    var valueN = nn.getNode().value + this.gap;
+                    var valueW = nw.getNode().value + this.gap;
+                    var valueNW = 0;
 
-                if (_nodeController.valueA === _nodeController.valueB ) {
-                    valueNW = nnw.getNode().value + this.match;
-                } else {
-                    valueNW = nnw.getNode().value + this.misMatch;
-                }
+                    if (_nodeController.valueA === _nodeController.valueB ) {
+                        valueNW = nnw.getNode().value + this.match;
+                    } else {
+                        valueNW = nnw.getNode().value + this.misMatch;
+                    }
 
-                if (valueN >= valueNW && valueN >= valueW) {
-                    connecteds.push(Connected.N);
-                }
+                    if (valueN >= valueNW && valueN >= valueW) {
+                        connecteds.push(Connected.N);
+                    }
 
-                if (valueW >= valueNW && valueW >= valueN) {
-                    connecteds.push(Connected.W);
-                }
+                    if (valueW >= valueNW && valueW >= valueN) {
+                        connecteds.push(Connected.W);
+                    }
 
-                if (valueNW >= valueW && valueNW >= valueN) {
-                    connecteds.push(Connected.NW);
-                }
-
-                _nodeController.getNode().connected = connecteds;
-
-                if (connecteds.contains(Connected.N)) {
-                    _nodeController.getNode().value = (valueN);
-                    return;
-                }
-
-                if (connecteds.contains(Connected.NW)) {
-                    _nodeController.getNode().value = (valueNW);
-                    return;
-                }
-
-                if (connecteds.contains(Connected.W)) {
-                    _nodeController.getNode().value = (valueW);
-                    return;
+                    if (valueNW >= valueW && valueNW >= valueN) {
+                        connecteds.push(Connected.NW);
+                    }
+                    if (connecteds.contains(Connected.N)) {
+                        _nodeController.getNode().value = (valueN);
+                        return;
+                    }
+                    if (connecteds.contains(Connected.NW)) {
+                        _nodeController.getNode().value = (valueNW);
+                        return;
+                    }
+                    if (connecteds.contains(Connected.W)) {
+                        _nodeController.getNode().value = (valueW);
+                        return;
+                    }
+                } finally {
+                    _nodeController.getNode().connected = connecteds;
                 }
             };
         },
