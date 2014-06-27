@@ -1,4 +1,4 @@
-/*! dna-sequence-process - v0.0.1 - 2014-06-25
+/*! dna-sequence-process - v0.0.1 - 2014-06-26
 * https://github.com/samuelklein/dna-sequence-process
 * Copyright (c) 2014 Samuel A. Klein; Licensed MIT */
 if(!window.dna) {
@@ -963,13 +963,18 @@ if(!window.dna) {
                             break;
                     }
 
-                    if (posA < 0 || posB < 0 || this.sequenceB.length < posB || this.sequenceA.length < posA) {
-                        return null;
-                    }
+//                    if (posA < 0 || posB < 0 || this.sequenceB.length < posB || this.sequenceA.length < posA) {
+//
+//                        return null;
+//                    }
 
-                    var nodeFound = nodes[posA][posB];
+                    var nodeFound;
 
-                    if (nodeFound !== null) {
+                    try{
+                        nodeFound = nodes[posA][posB];
+                    } catch (e){}
+
+                    if (nodeFound) {
                         return this.controllers[this.getValuePosController(nodeFound)];
                     }
                     return null;
