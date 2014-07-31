@@ -176,6 +176,8 @@ ObjectOpenAlign.verifyNode = function (rect) {
         var nodeAlign = nodesAlign[i];
         $("rect[vx=" + nodeAlign.x + "][vy=" + nodeAlign.y + "]").attr('class', 'alignSelect');
     }
+
+    EventOpenAlign.resetScrollMatrix();
 };
 
 var EventOpenAlign = {
@@ -310,7 +312,17 @@ EventOpenAlign.clickPossibilityManual = function () {
     var possibilityResult = document.getElementById('possibilityResult');
     possibilityResult.appendChild(p);
 
-}
+};
+
+EventOpenAlign.resetScrollMatrix = function (){
+    $("#col-matrix").toggleClass("col-md-9");
+    if ($(this).is(":hidden")) {
+        $("#matrix").width($(".row").width() - 20);
+    } else {
+        $("#matrix").width(widthDefault);
+    }
+};
+
 
 var ProcessOpenAlign = {
 
@@ -382,12 +394,7 @@ $(function () {
 
     $("#btnScore").click(function () {
         $("#possibilityResult").toggle(function () {
-            $("#col-matrix").toggleClass("col-md-9");
-            if ($(this).is(":hidden")) {
-                $("#matrix").width($(".row").width() - 20);
-            } else {
-                $("#matrix").width(widthDefault);
-            }
+            EventOpenAlign.resetScrollMatrix();
         });
     });
 
