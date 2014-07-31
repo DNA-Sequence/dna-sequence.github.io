@@ -323,8 +323,15 @@ EventOpenAlign.resetScrollMatrix = function (){
         $("#matrix").width(widthDefault);
     }
 
+    var elemMatrix = $("#matrix")[0];
+    var eScrollTop = elemMatrix.scrollTop;
+    var eScrollLeft = elemMatrix.scrollLeft;
+
     $("#matrix").height("100%");
     $("#matrix").height($("#matrix").height() - $(".menuDown").height() - $(".menuUp").height());
+
+    elemMatrix.scrollTop = eScrollTop;
+    elemMatrix.scrollLeft = eScrollLeft;
 };
 
 
