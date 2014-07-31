@@ -5,18 +5,18 @@
 var ImportScripts = Class.create();
 
 ImportScripts.prototype = {
-    initialize: function() {
+    initialize: function () {
 
     },
-    setScript : function(){
+    setScript: function () {
         var _head = document.head;
-        for( var pr in arguments ) {
+        for (var pr in arguments) {
             var _script = document.createElement("script");
             _script.setAttribute("src", arguments[pr]);
             _head.appendChild(_script);
         }
     },
-    setReq : function(_js){
+    setReq: function (_js) {
         var _head = document.head;
         var _script = document.createElement("script");
         _script.setAttribute("data-main", _js);

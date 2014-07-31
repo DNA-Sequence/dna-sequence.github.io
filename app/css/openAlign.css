@@ -65,6 +65,10 @@ td {
 	vertical-align: middle;
 }
 
+.valueTextCandidate {
+    cursor: pointer;
+}
+
 .alignCandidate{
 	width:10;
 	height:10;
@@ -96,6 +100,25 @@ td {
 	padding: 0px;
 }
 
+.alignCandidateSelect{
+    width:10;
+    height:10;
+    fill: #c5ba08;
+    stroke:black;
+    stroke-width: 1px;
+    background-color: #C5C5C5;
+    cursor: pointer;
+}
+
+.alignSelect{
+    width:10;
+    height:10;
+    fill: #c5332e;
+    stroke:black;
+    stroke-width: 1px;
+    background-color: #C5C5C5;
+}
+
 .scores_on {
     /*display: inherit;*/
 }
@@ -107,7 +130,8 @@ td {
 .scores p {
 	text-align: center;
 	margin: 2px;
-	background-color: gray;	
+	background-color: gray;
+    cursor:pointer;
 }
 
 #tableResult-div {

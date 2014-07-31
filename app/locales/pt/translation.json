@@ -1,33 +1,34 @@
 {
-  "menu": {
-    "new": "Novo",
-    "open": "Abrir",
-    "delete": "Deletar"
-  },
-  "headAlign": {
-  	"Align": "Alinhamento",
-  	"Date": "Data",
-  	"Type": "Tipo"
-  },
-  "pageNew": {
-  	"NewAlign": "Novo Alinhamento",
-  	"NUCLEOTIDE": "NUCLEOTIDEOS",
-  	"PROTEIN": "PROTEINA",
-  	"SequenceA": "Sequencia A",
-  	"SequenceB": "Sequencia B",
-  	"METHOD": "METODO",
-  	"Global": "Global",
-  	"Local": "Local",
-  	"Gap": "Gap Penalty",
-  	"Match": "Match",
-  	"Mismatch": "Mismatch",
-  	"Close": "Fechar",
-  	"Save": "Savar"
-  },
-  "openAligh": {
-  	"Back": "Voltar",
-  	"SCALE": "Escala",
-    "SCORE" : "Score"
-  	 "ResultAlign": "Resultado alinhamento"
-  }
+    "menu": {
+        "new": "Novo",
+        "open": "Abrir",
+        "delete": "Deletar"
+    },
+    "headAlign": {
+        "Align": "Alinhamento",
+        "Date": "Data",
+        "Type": "Tipo"
+    },
+    "pageNew": {
+        "NewAlign": "Novo Alinhamento",
+        "NUCLEOTIDE": "NUCLEOTIDEOS",
+        "PROTEIN": "PROTEINA",
+        "SequenceA": "Sequencia A",
+        "SequenceB": "Sequencia B",
+        "METHOD": "METODO",
+        "Global": "Global",
+        "Local": "Local",
+        "Gap": "Gap Penalty",
+        "Match": "Match",
+        "Mismatch": "Mismatch",
+        "Close": "Fechar",
+        "Save": "Savar"
+    },
+    "openAligh": {
+        "Back": "Voltar",
+        "SCALE": "Escala",
+        "SCORE": "Score",
+        "NEW_MANUAL": "Novo Manual",
+        "ResultAlign": "Resultado alinhamento"
+    }
 }
