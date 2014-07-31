@@ -1,3 +1,5 @@
+var widthDefault = null;
+
 var ObjectOpenAlign = function () {
 };
 
@@ -315,12 +317,14 @@ EventOpenAlign.clickPossibilityManual = function () {
 };
 
 EventOpenAlign.resetScrollMatrix = function (){
-    $("#col-matrix").toggleClass("col-md-9");
     if ($(this).is(":hidden")) {
         $("#matrix").width($(".row").width() - 20);
     } else {
         $("#matrix").width(widthDefault);
     }
+
+    $("#matrix").height("100%");
+    $("#matrix").height($("#matrix").height() - $(".menuDown").height() - $(".menuUp").height());
 };
 
 
@@ -390,10 +394,11 @@ function start() {
 }
 
 $(function () {
-    var widthDefault = $("#matrix").width();
+    widthDefault = $("#matrix").width();
 
     $("#btnScore").click(function () {
         $("#possibilityResult").toggle(function () {
+            $("#col-matrix").toggleClass("col-md-9");
             EventOpenAlign.resetScrollMatrix();
         });
     });
