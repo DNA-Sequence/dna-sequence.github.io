@@ -273,9 +273,6 @@ EventOpenAlign.clickPossibilityManual = function () {
     p.onclick = function () {
         ObjectOpenAlign.alignCurrent = align;
         ObjectOpenAlign.verifyNode(null);
-
-//        clickPossibilityResult(align);
-//        clickPossibilityManual(align);
     };
 
     setTimeout(function () {
@@ -308,6 +305,11 @@ EventOpenAlign.clickPossibilityManual = function () {
             }
 
         }
+
+        var elemMatrix = document.getElementById('matrix');
+
+        elemMatrix.scrollTop = elemMatrix.scrollHeight;
+        elemMatrix.scrollLeft = elemMatrix.scrollWidth;
 
     }, 0);
 
