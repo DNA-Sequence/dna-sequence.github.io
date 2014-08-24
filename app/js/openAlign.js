@@ -376,9 +376,11 @@ EventOpenAlign.resetScrollMatrix = function (){
 };
 
 EventOpenAlign.oncontextmenu = function (mouseEvent){
-    console.log(mouseEvent.toElement);
-
     var element = mouseEvent.toElement;
+
+    if(!element){
+        element = mouseEvent.target;
+    }
 
     if(element.tagName === 'text'){
         try{
