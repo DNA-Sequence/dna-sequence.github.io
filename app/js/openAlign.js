@@ -382,7 +382,7 @@ EventOpenAlign.oncontextmenu = function (mouseEvent){
 
     if(element.tagName === 'text'){
         try{
-            ObjectOpenAlign.openDetailRect($("#matrix rect[vx=" + ele.getAttribute("vx") + "][vy=" + ele.getAttribute("vy") + "]")[0]);
+            ObjectOpenAlign.openDetailRect($("#matrix rect[vx=" + element.getAttribute("vx") + "][vy=" + element.getAttribute("vy") + "]")[0]);
         } catch (e){}
         return false;
     } else if(element.tagName === 'rect'){
