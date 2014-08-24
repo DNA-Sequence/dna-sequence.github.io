@@ -26,10 +26,10 @@
 				<li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-i18n="openAligh.SCALE"><b class="caret"></b></a>
 		          <ul class="dropdown-menu">
-		            <li class="valueScale" value="10"><a>50%</a></li>
-		            <li class="valueScale" value="20"><a>100%</a></li>
-		            <li class="valueScale" value="30"><a>150%</a></li>
-		            <li class="valueScale" value="40"><a>200%</a></li>
+		            <li class="valueScale" value="20"><a>50%</a></li>
+		            <li class="valueScale" value="40"><a>100%</a></li>
+		            <li class="valueScale" value="60"><a>150%</a></li>
+		            <li class="valueScale" value="80"><a>200%</a></li>
 		          </ul>
 		        </li>
                 <button id="btnScore" type="button" class="btn btn-default navbar-btn navbar-header">
@@ -41,8 +41,8 @@
 	<div id='main' class="container" role='main'>
         <table width="100%">
             <tr>
-                <td id="trMatrix" style="overflow: scroll" >
-                    <div style="width: 200px; " id="matrix">
+                <td id="trMatrix" style="overflow: scroll !important;" >
+                    <div style="width: 200px; min-width: 200px;  max-width: 200px;" id="matrix">
                         <svg id=test>
                         </svg>
                     </div>
@@ -72,7 +72,7 @@
                     <h4 data-i18n="openAligh.DetailNode" class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-                    <form role="form" style="width: 400px; height: 450px">
+                    <form role="form" >
                         <svg id="matrixDetail" fill="#e7e7e7">
                             <rect class="align_Detail" x="50" y="25" width="200" height="200"></rect>
                             <rect class="align_Detail" x="270" y="245" width="200" height="200"></rect>

@@ -77,11 +77,11 @@ ObjectOpenAlign.createMatrix = function (data) {
 
     var htmlSVG = "";
 
-    $('svg').attr("width", (40 + (this.nodes.length * 10)));
-    $('svg').attr("height", (100 + (this.nodes[0].length * 10)));
+    $('#matrix svg').attr("width", (40 + (this.nodes.length * 10)));
+    $('#matrix svg').attr("height", (100 + (this.nodes[0].length * 10)));
 
-    $('svg').attr("vwidth", this.nodes.length);
-    $('svg').attr("vheight", this.nodes[0].length);
+    $('#matrix svg').attr("vwidth", this.nodes.length);
+    $('#matrix svg').attr("vheight", this.nodes[0].length);
 
     for (i = 0; i < sequenceA.length; i++) {
         htmlSVG += '<text class="textSeqA" vx=' + i + ' x="' + (20 + ((i + 1) * 10)) + '" y="15" width="8" height="8" >' + sequenceA[i] + '</text>';
@@ -106,9 +106,9 @@ ObjectOpenAlign.createMatrix = function (data) {
 
     $("#test").append(this.parseSVG(htmlSVG));
 
-    $('text').css('font', '10px sans-serif;');
+    $('#matrix svg text').css('font', '10px sans-serif;');
 
-    EventOpenAlign.scaleMatrix(20);
+    EventOpenAlign.scaleMatrix(40);
 
 };
 
@@ -179,6 +179,9 @@ ObjectOpenAlign.verifyNode = function (rect) {
         $("#matrix rect[vx=" + nodeAlign.x + "][vy=" + nodeAlign.y + "]").attr('class', 'alignSelect');
     }
 
+
+    $(rect).attr('class', 'alignSelectNow');
+
     EventOpenAlign.resetScrollMatrix();
 };
 
@@ -244,7 +247,7 @@ EventOpenAlign.clickFieldPossibility = function (align) {
 };
 
 EventOpenAlign.scaleMatrix = function (value) {
-    $('svg').each(function () {
+    $('#matrix svg').each(function () {
         $(this).attr("width", (40 + ($(this).attr('vwidth') * value))).attr("height", (100 + ($(this).attr('vheight') * value)));
     });
 
@@ -252,6 +255,7 @@ EventOpenAlign.scaleMatrix = function (value) {
         var i = $(this).attr('vx');
         var j = $(this).attr('vy');
         $(this).attr('width', value).attr('height', value).attr('x', (20 + (i * value))).attr('y', (20 + (j * value)));
+
     });
 
     $(".valueText,.valueTextCandidate").each(function () {
@@ -260,7 +264,9 @@ EventOpenAlign.scaleMatrix = function (value) {
 
         var w = 20 + (value / 2);
 
-        $(this).attr('x', (w - 5 + (i * value))).attr('y', ((w + 5) + (j * value)));
+        $(this).attr('width', value).attr('height', value).attr('x', (20 + (i * value) + (value/2))).attr('y', ((w + 5) + (j * value)));
+
+//        $(this).attr('width', value).attr('height', value).attr('x', (w - 5 + (i * value))).attr('y', ((w + 5) + (j * value)));
     });
 
     $(".textSeqA").each(function () {
@@ -284,7 +290,11 @@ EventOpenAlign.scaleMatrix = function (value) {
 //        $(".valueTextCandidate").show();
 //    }
 
-    $('text').css('font', value + 'px sans-serif;');
+
+    debugger;
+    $('#matrix svg text').css('font', value + 'px sans-serif;');
+    $('.valueTextCandidate').css('font-size', value/2);
+    $('.valueText').css('font-size', value/2);
 };
 
 EventOpenAlign.clickElementText = function (ele) {
@@ -294,8 +304,9 @@ EventOpenAlign.clickElementText = function (ele) {
 EventOpenAlign.clickElementRect = function (ele) {
 
     if ($(ele).is(".alignCandidateSelect")) {
+        $(".alignSelectNow").attr("class", "alignSelect");
         $(".alignCandidateSelect").attr("class", "alignCandidate");
-        $(ele).attr("class", "alignSelect");
+        $(ele).attr("class", "alignSelectNow");
         ObjectOpenAlign.verifyNode(ele);
     }
 
@@ -327,7 +338,7 @@ EventOpenAlign.clickPossibilityManual = function () {
             var node = nodes[nodes.length - 1][nodes[0].length - 1];
             align.nodeBack = node;
 
-            var rect = $("#matrix rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignSelect');
+            var rect = $("#matrix rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignSelectNow');
 
             ObjectOpenAlign.verifyNode(rect[0]);
 
