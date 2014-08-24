@@ -380,7 +380,12 @@ EventOpenAlign.oncontextmenu = function (mouseEvent){
 
     var element = mouseEvent.toElement;
 
-    if(element.tagName === 'rect'){
+    if(element.tagName === 'text'){
+        try{
+            ObjectOpenAlign.openDetailRect($("#matrix rect[vx=" + ele.getAttribute("vx") + "][vy=" + ele.getAttribute("vy") + "]")[0]);
+        } catch (e){}
+        return false;
+    } else if(element.tagName === 'rect'){
         ObjectOpenAlign.openDetailRect(element);
         return false;
     }
