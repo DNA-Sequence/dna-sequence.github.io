@@ -95,11 +95,11 @@ ObjectOpenAlign.createMatrix = function (data) {
         for (var j = 0; j < this.nodes[i].length; j++) {
 
             if (this.nodes[i][j].candidate) {
-                htmlSVG += '<rect onclick="EventOpenAlign.clickElementRect(this)" class="alignCandidate" cand="true" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (20 + (j * 10)) + '" />';
-//                htmlSVG += '<text onclick="EventOpenAlign.clickElementText(this)" class="valueTextCandidate" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (25 + (j * 10)) + '" width="10" height="10" >' + this.nodes[i][j].value + '</text>';
+                htmlSVG += '<rect onclick="EventOpenAlign.clickElementRect(this)" class="noAlign" cand="true" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (20 + (j * 10)) + '" />';
+                htmlSVG += '<text onclick="EventOpenAlign.clickElementText(this)" class="valueTextCandidate" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (25 + (j * 10)) + '" width="10" height="10" >' + this.nodes[i][j].value + '</text>';
             } else {
                 htmlSVG += '<rect onclick="EventOpenAlign.clickElementRect(this)" class="noAlign" cand="false" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (20 + (j * 10)) + '"  />';
-//                htmlSVG += '<text onclick="EventOpenAlign.clickElementText(this)" class="valueText" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (25 + (j * 10)) + '" width="10" height="10" >' + this.nodes[i][j].value + '</text>';
+                htmlSVG += '<text onclick="EventOpenAlign.clickElementText(this)" class="valueText" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (25 + (j * 10)) + '" width="10" height="10" >' + this.nodes[i][j].value + '</text>';
             }
         }
     }
@@ -278,11 +278,11 @@ EventOpenAlign.scaleMatrix = function (value) {
         $(this).attr('y', (w + ((j + 1) * value)));
     });
 
-    $(".valueTextCandidate").hide();
-    $(".valueText").hide();
-    if (value >= 20) {
-        $(".valueTextCandidate").show();
-    }
+//    $(".valueTextCandidate").hide();
+//    $(".valueText").hide();
+//    if (value >= 20) {
+//        $(".valueTextCandidate").show();
+//    }
 
     $('text').css('font', value + 'px sans-serif;');
 };
