@@ -22,13 +22,16 @@
         "Match": "Match",
         "Mismatch": "Mismatch",
         "Close": "Fechar",
-        "Save": "Savar"
+        "Save": "Salvar"
     },
     "openAligh": {
         "Back": "Voltar",
         "SCALE": "Escala",
         "SCORE": "Score",
         "NEW_MANUAL": "Novo Manual",
-        "ResultAlign": "Resultado alinhamento"
+        "ResultAlign": "Resultado alinhamento",
+        "DetailNode" : "Detalhe Elemento",
+        "Close": "Fechar",
+        "Save": "Salvar"
     }
 }

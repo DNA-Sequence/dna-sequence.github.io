@@ -84,7 +84,7 @@ ObjectOpenAlign.createMatrix = function (data) {
     $('svg').attr("vheight", this.nodes[0].length);
 
     for (i = 0; i < sequenceA.length; i++) {
-        htmlSVG += '<text class="textSeqA" vx=' + i + ' x="' + (20 + ((i + 1) * 10)) + '" y="10" width="8" height="8" >' + sequenceA[i] + '</text>';
+        htmlSVG += '<text class="textSeqA" vx=' + i + ' x="' + (20 + ((i + 1) * 10)) + '" y="15" width="8" height="8" >' + sequenceA[i] + '</text>';
     }
 
     for (i = 0; i < sequenceB.length; i++) {
@@ -96,10 +96,10 @@ ObjectOpenAlign.createMatrix = function (data) {
 
             if (this.nodes[i][j].candidate) {
                 htmlSVG += '<rect onclick="EventOpenAlign.clickElementRect(this)" class="alignCandidate" cand="true" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (20 + (j * 10)) + '" />';
-                htmlSVG += '<text onclick="EventOpenAlign.clickElementText(this)" class="valueTextCandidate" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (25 + (j * 10)) + '" width="10" height="10" >' + this.nodes[i][j].value + '</text>';
+//                htmlSVG += '<text onclick="EventOpenAlign.clickElementText(this)" class="valueTextCandidate" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (25 + (j * 10)) + '" width="10" height="10" >' + this.nodes[i][j].value + '</text>';
             } else {
                 htmlSVG += '<rect onclick="EventOpenAlign.clickElementRect(this)" class="noAlign" cand="false" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (20 + (j * 10)) + '"  />';
-                htmlSVG += '<text onclick="EventOpenAlign.clickElementText(this)" class="valueText" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (25 + (j * 10)) + '" width="10" height="10" >' + this.nodes[i][j].value + '</text>';
+//                htmlSVG += '<text onclick="EventOpenAlign.clickElementText(this)" class="valueText" vx="' + i + '" vy="' + j + '" x="' + (20 + (i * 10)) + '" y="' + (25 + (j * 10)) + '" width="10" height="10" >' + this.nodes[i][j].value + '</text>';
             }
         }
     }
@@ -165,21 +165,62 @@ ObjectOpenAlign.verifyNode = function (rect) {
 
     var nodesAlign = align.dataRetorn.arrayNodeAlign;
 
-    $("rect[cand='true']").attr('class', 'alignCandidate');
+    $("#matrix rect[cand='true']").attr('class', 'alignCandidate');
 
     $("#tableResult").html(ObjectOpenAlign.mountTableResult(align.dataRetorn.sbSeqA.toString(), align.dataRetorn.sbSeqB.toString()));
 
     for (var i = 0; i < nodesC.length; i++) {
         var nodeC = nodesC[i];
-        $("rect[vx=" + nodeC.x + "][vy=" + nodeC.y + "]").attr('class', 'alignCandidateSelect');
+        $("#matrix rect[vx=" + nodeC.x + "][vy=" + nodeC.y + "]").attr('class', 'alignCandidateSelect');
     }
 
     for (i = 0; i < nodesAlign.length; i++) {
         var nodeAlign = nodesAlign[i];
-        $("rect[vx=" + nodeAlign.x + "][vy=" + nodeAlign.y + "]").attr('class', 'alignSelect');
+        $("#matrix rect[vx=" + nodeAlign.x + "][vy=" + nodeAlign.y + "]").attr('class', 'alignSelect');
     }
 
     EventOpenAlign.resetScrollMatrix();
+};
+
+ObjectOpenAlign.openDetailRect = function (element){
+    var x = element.getAttribute("vx");
+    var y = element.getAttribute("vy");
+
+    console.log(this.nodes[x][y]);
+
+    var node = this.nodes[x][y];
+
+    var nodeDetail = ProcessOpenAlign.calculation.nodeDetail(node);
+
+
+    $('#DetailNode').html(node.value);
+    if(nodeDetail.nodeW){
+        $('#DetailNodeW').html(nodeDetail.nodeW.value);
+    }
+    if(nodeDetail.nodeN){
+        $('#DetailNodeN').html(nodeDetail.nodeN.value);
+    }
+    if(nodeDetail.nodeNW){
+        $('#DetailNodeNW').html(nodeDetail.nodeNW.value);
+    }
+
+    $('#DetailConnectN').hide();
+    $('#DetailConnectNW').hide();
+    $('#DetailConnectW').hide();
+
+    $('#DetailCalcN').html(nodeDetail.nodeCalcN);
+    $('#DetailCalcNW').html(nodeDetail.nodeCalcNW);
+    $('#DetailCalcW').html(nodeDetail.nodeCalcW);
+
+    for (var i = 0; i < node.connected.length; i++) {
+        $('#DetailConnect' + node.connected[i]).show();
+    }
+
+    $('#pageDetailRec').modal({
+        show : true,
+        keyboard: true
+    });
+
 };
 
 var EventOpenAlign = {
@@ -187,19 +228,18 @@ var EventOpenAlign = {
 };
 
 EventOpenAlign.clickFieldPossibility = function (align) {
-    $("rect[cand='true']").attr('class', 'alignCandidate');
+    $("#matrix rect[cand='true']").attr('class', 'alignCandidate');
 
     for (var i = 0; i < align.result.nodes.length; i++) {
         var node = align.result.nodes[i];
-        // $("rect[vx=" + node.x + "][vy=" + node.y + "]").attr('fill', cor);
-        $("rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'align');
+        // $("#matrix rect[vx=" + node.x + "][vy=" + node.y + "]").attr('fill', cor);
+        $("#matrix rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'align');
 
     }
 
     $("#tableResult").html(ObjectOpenAlign.mountTableResult(align.result.resultSequenceA, align.result.resultSequenceB));
 
-    $("#matrix").height("100%");
-    $("#matrix").height($("#matrix").height() - $(".menuDown").height() - $(".menuUp").height());
+    $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 10);
 
 };
 
@@ -208,7 +248,7 @@ EventOpenAlign.scaleMatrix = function (value) {
         $(this).attr("width", (40 + ($(this).attr('vwidth') * value))).attr("height", (100 + ($(this).attr('vheight') * value)));
     });
 
-    $("rect").each(function () {
+    $("#matrix rect").each(function () {
         var i = $(this).attr('vx');
         var j = $(this).attr('vy');
         $(this).attr('width', value).attr('height', value).attr('x', (20 + (i * value))).attr('y', (20 + (j * value)));
@@ -248,7 +288,7 @@ EventOpenAlign.scaleMatrix = function (value) {
 };
 
 EventOpenAlign.clickElementText = function (ele) {
-    this.clickElementRect($("rect[vx=" + ele.getAttribute("vx") + "][vy=" + ele.getAttribute("vy") + "]")[0]);
+    this.clickElementRect($("#matrix rect[vx=" + ele.getAttribute("vx") + "][vy=" + ele.getAttribute("vy") + "]")[0]);
 };
 
 EventOpenAlign.clickElementRect = function (ele) {
@@ -287,7 +327,7 @@ EventOpenAlign.clickPossibilityManual = function () {
             var node = nodes[nodes.length - 1][nodes[0].length - 1];
             align.nodeBack = node;
 
-            var rect = $("rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignSelect');
+            var rect = $("#matrix rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignSelect');
 
             ObjectOpenAlign.verifyNode(rect[0]);
 
@@ -296,12 +336,12 @@ EventOpenAlign.clickPossibilityManual = function () {
 
             for (var i = 0; i < nodes.length; i++) {
                 node = nodes[i][nodes[0].length - 1];
-                $("rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignCandidateSelect');
+                $("#matrix rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignCandidateSelect');
             }
 
             for (var i = 0; i < nodes[0].length; i++) {
                 node = nodes[nodes.length - 1][i];
-                $("rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignCandidateSelect');
+                $("#matrix rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignCandidateSelect');
             }
 
         }
@@ -329,12 +369,25 @@ EventOpenAlign.resetScrollMatrix = function (){
     var eScrollTop = elemMatrix.scrollTop;
     var eScrollLeft = elemMatrix.scrollLeft;
 
-    $("#matrix").height("100%");
-    $("#matrix").height($("#matrix").height() - $(".menuDown").height() - $(".menuUp").height());
+    $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 10);
 
     elemMatrix.scrollTop = eScrollTop;
     elemMatrix.scrollLeft = eScrollLeft;
 };
+
+EventOpenAlign.oncontextmenu = function (mouseEvent){
+    console.log(mouseEvent.toElement);
+
+    var element = mouseEvent.toElement;
+
+    if(element.tagName === 'rect'){
+        ObjectOpenAlign.openDetailRect(element);
+        return false;
+    }
+
+    return true;
+};
+
 
 
 var ProcessOpenAlign = {
@@ -397,8 +450,7 @@ function start() {
         history.back();
     });
 
-    $("#matrix").height("100%");
-    $("#matrix").height($("#matrix").height() - $(".menuDown").height() - $(".menuUp").height());
+    $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 10);
 
 }
 
@@ -406,10 +458,7 @@ $(function () {
     widthDefault = $("#matrix").width();
 
     $("#btnScore").click(function () {
-        $("#possibilityResult").toggle(function () {
-            $("#col-matrix").toggleClass("col-md-9");
-            EventOpenAlign.resetScrollMatrix();
-        });
+        $("#possibilityResult").toggle();
     });
 
     $('link[href*="clean"]').remove();
@@ -421,6 +470,8 @@ $(function () {
     $(".alignCandidateSelect").click(function () {
         console.log("Testes" + this);
     });
+
+    document.oncontextmenu = EventOpenAlign.oncontextmenu;
 
 });
 

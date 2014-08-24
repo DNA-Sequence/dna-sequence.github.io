@@ -29,6 +29,9 @@
         "SCALE": "SCALE",
         "SCORE": "SCORE",
         "NEW_MANUAL": "New Manual",
-        "ResultAlign": "RESULT ALIGN"
+        "ResultAlign": "RESULT ALIGN",
+        "DetailNode" : "Detail Node",
+        "Close": "Close",
+        "Save": "Save"
     }
 }

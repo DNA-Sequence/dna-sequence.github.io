@@ -1,4 +1,4 @@
-/*! dna-sequence-process - v0.0.1 - 2014-07-30
+/*! dna-sequence-process - v0.0.1 - 2014-08-23
 * https://github.com/samuelklein/dna-sequence-process
 * Copyright (c) 2014 Samuel A. Klein; Licensed MIT */
 Array.prototype.contains = function (item, from) {
@@ -156,6 +156,25 @@ if (!window.dna) {
 })(window);
 (function (window) {
 
+    var NodeDetail = function () {
+
+    };
+
+    NodeDetail.prototype = {
+        node : null,
+        nodeW : null,
+        nodeNW : null,
+        nodeN : null,
+        nodeCalcW : null,
+        nodeCalcNW : null,
+        nodeCalcN : null
+    };
+
+    window.dna.NodeDetail = NodeDetail;
+
+})(window);
+(function (window) {
+
     var OutputAlign = function () {
 
     };
@@ -246,6 +265,10 @@ if (!window.dna) {
 
     };
 
+    Calculation.prototype.nodeDetail = function (){
+
+    };
+
     Calculation.prototype.methodSequencing = null;
 
 
@@ -263,6 +286,15 @@ if (!window.dna) {
         this.gap = null;
         this.match = null;
         this.misMatch = null;
+
+        this.getCalcNode = function (node, pointer){
+            if(node){
+                var value = node.value + pointer;
+                return "" + node.value + " + (" + pointer + ") = " + value;
+            } else {
+                return "";
+            }
+        };
 
         this.align = function (nodeController, connected) {
 
@@ -518,6 +550,29 @@ if (!window.dna) {
 
         return dataRetorn;
     };
+
+    AbstractCalculation.prototype.nodeDetail = function (node) {
+        var nodeController = this.organizeNode.getController(node);
+
+        var nodeDetail = new dna.NodeDetail();
+
+        nodeDetail.node = node;
+        nodeDetail.nodeN = nodeController.nodeN;
+        nodeDetail.nodeNW = nodeController.nodeNW;
+        nodeDetail.nodeW = nodeController.nodeW;
+
+        nodeDetail.nodeCalcN = this.getCalcNode(nodeController.nodeN, this.gap);
+        nodeDetail.nodeCalcW = this.getCalcNode(nodeController.nodeW, this.gap);
+        if (node.charSeqA === node.charSeqB) {
+            nodeDetail.nodeCalcNW = this.getCalcNode(nodeController.nodeNW, this.match);
+        } else {
+            nodeDetail.nodeCalcNW = this.getCalcNode(nodeController.nodeNW, this.misMatch);
+        }
+
+        return nodeDetail;
+    };
+
+
 
 
     dna.AbstractCalculation = AbstractCalculation;
