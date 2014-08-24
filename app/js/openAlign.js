@@ -27,12 +27,12 @@ ObjectOpenAlign.openAlign = function (id) {
 
 ObjectOpenAlign.createAreaPossibility = function () {
     var possibilityResult = document.getElementById('possibilityResult');
-    possibilityResult.appendChild(this.createFieldPossibility([ 'N', 'W', 'NW' ], "1: "));
-    possibilityResult.appendChild(this.createFieldPossibility([ 'W', 'N', 'NW' ], "2: "));
-    possibilityResult.appendChild(this.createFieldPossibility([ 'N', 'NW', 'W' ], "3: "));
-    possibilityResult.appendChild(this.createFieldPossibility([ 'W', 'NW', 'N' ], "4: "));
-    possibilityResult.appendChild(this.createFieldPossibility([ 'NW', 'N', 'W' ], "5: "));
-    possibilityResult.appendChild(this.createFieldPossibility([ 'NW', 'W', 'N' ], "6: "));
+    possibilityResult.appendChild(this.createFieldPossibility([ 'N', 'W', 'NW' ], "up-left-diagonal: "));
+    possibilityResult.appendChild(this.createFieldPossibility([ 'W', 'N', 'NW' ], "left-up-diagonal: "));
+    possibilityResult.appendChild(this.createFieldPossibility([ 'N', 'NW', 'W' ], "up-diagonal-left: "));
+    possibilityResult.appendChild(this.createFieldPossibility([ 'W', 'NW', 'N' ], "left-diagonal-up: "));
+    possibilityResult.appendChild(this.createFieldPossibility([ 'NW', 'N', 'W' ], "diagonal-up-left: "));
+    possibilityResult.appendChild(this.createFieldPossibility([ 'NW', 'W', 'N' ], "diagonal-left-up: "));
 };
 
 ObjectOpenAlign.createFieldPossibility = function (connect, text) {
