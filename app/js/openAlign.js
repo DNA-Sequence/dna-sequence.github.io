@@ -185,7 +185,7 @@ ObjectOpenAlign.verifyNode = function (rect) {
     EventOpenAlign.resetScrollMatrix();
 };
 
-ObjectOpenAlign.openDetailRect = function (element){
+ObjectOpenAlign.openDetailRect = function (element) {
     var x = element.getAttribute("vx");
     var y = element.getAttribute("vy");
 
@@ -197,13 +197,13 @@ ObjectOpenAlign.openDetailRect = function (element){
 
 
     $('#DetailNode').html(node.value);
-    if(nodeDetail.nodeW){
+    if (nodeDetail.nodeW) {
         $('#DetailNodeW').html(nodeDetail.nodeW.value);
     }
-    if(nodeDetail.nodeN){
+    if (nodeDetail.nodeN) {
         $('#DetailNodeN').html(nodeDetail.nodeN.value);
     }
-    if(nodeDetail.nodeNW){
+    if (nodeDetail.nodeNW) {
         $('#DetailNodeNW').html(nodeDetail.nodeNW.value);
     }
 
@@ -220,7 +220,7 @@ ObjectOpenAlign.openDetailRect = function (element){
     }
 
     $('#pageDetailRec').modal({
-        show : true,
+        show: true,
         keyboard: true
     });
 
@@ -243,6 +243,7 @@ EventOpenAlign.clickFieldPossibility = function (align) {
     $("#tableResult").html(ObjectOpenAlign.mountTableResult(align.result.resultSequenceA, align.result.resultSequenceB));
 
     $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 10);
+    $("#matrix").width($('body').width() - 260);
 
 };
 
@@ -264,7 +265,7 @@ EventOpenAlign.scaleMatrix = function (value) {
 
         var w = 20 + (value / 2);
 
-        $(this).attr('width', value).attr('height', value).attr('x', (20 + (i * value) + (value/2))).attr('y', ((w + 5) + (j * value)));
+        $(this).attr('width', value).attr('height', value).attr('x', (20 + (i * value) + (value / 2))).attr('y', ((w + 5) + (j * value)));
 
 //        $(this).attr('width', value).attr('height', value).attr('x', (w - 5 + (i * value))).attr('y', ((w + 5) + (j * value)));
     });
@@ -291,10 +292,9 @@ EventOpenAlign.scaleMatrix = function (value) {
 //    }
 
 
-    debugger;
     $('#matrix svg text').css('font', value + 'px sans-serif;');
-    $('.valueTextCandidate').css('font-size', value/2);
-    $('.valueText').css('font-size', value/2);
+    $('.valueTextCandidate').css('font-size', value / 2);
+    $('.valueText').css('font-size', value / 2);
 };
 
 EventOpenAlign.clickElementText = function (ele) {
@@ -369,7 +369,7 @@ EventOpenAlign.clickPossibilityManual = function () {
 
 };
 
-EventOpenAlign.resetScrollMatrix = function (){
+EventOpenAlign.resetScrollMatrix = function () {
     if ($(this).is(":hidden")) {
         $("#matrix").width($(".row").width() - 20);
     } else {
@@ -381,24 +381,26 @@ EventOpenAlign.resetScrollMatrix = function (){
     var eScrollLeft = elemMatrix.scrollLeft;
 
     $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 10);
+    $("#matrix").width($('body').width() - 260);
 
     elemMatrix.scrollTop = eScrollTop;
     elemMatrix.scrollLeft = eScrollLeft;
 };
 
-EventOpenAlign.oncontextmenu = function (mouseEvent){
+EventOpenAlign.oncontextmenu = function (mouseEvent) {
     var element = mouseEvent.toElement;
 
-    if(!element){
+    if (!element) {
         element = mouseEvent.target;
     }
 
-    if(element.tagName === 'text'){
-        try{
+    if (element.tagName === 'text') {
+        try {
             ObjectOpenAlign.openDetailRect($("#matrix rect[vx=" + element.getAttribute("vx") + "][vy=" + element.getAttribute("vy") + "]")[0]);
-        } catch (e){}
+        } catch (e) {
+        }
         return false;
-    } else if(element.tagName === 'rect'){
+    } else if (element.tagName === 'rect') {
         ObjectOpenAlign.openDetailRect(element);
         return false;
     }
@@ -406,6 +408,40 @@ EventOpenAlign.oncontextmenu = function (mouseEvent){
     return true;
 };
 
+EventOpenAlign.getParameterCss = function () {
+
+    $.get(
+        'hbs/parameterCss.hbs',
+        function (script) {
+            var template = Handlebars.compile(script);
+
+            if (localStorage.parameterCss) {
+                $('#parameterCss').remove();
+                $('head').append(template(JSON.parse(localStorage.parameterCss)));
+                $('#idParameter').html(JSON.stringify(JSON.parse(localStorage.parameterCss), null, 4));
+            } else {
+                $.getJSON(
+                    'json/parameterCss.json',
+                    function (json) {
+                        $('#parameterCss').remove();
+                        localStorage.parameterCss = JSON.stringify(json);
+                        $('head').append(template(json));
+                        $('#idParameter').html(json);
+                    }
+                );
+            }
+
+        }
+    );
+
+};
+
+EventOpenAlign.salveParameterCss = function (script) {
+
+    localStorage.parameterCss = script;
+
+    this.getParameterCss();
+};
 
 
 var ProcessOpenAlign = {
@@ -441,22 +477,16 @@ ProcessOpenAlign.startProcess = function () {
 
     delete inputAlignResult.date;
 
-//    this.methodSequencing = inputAlignResult.methodSequencing;
-
-    console.log(JSON.stringify(inputAlignResult));
-
     this.calculation = dna.CalculationFactory.createCalculation(inputAlignResult);
     this.calculation.calculationNode();
     this.calculation.findAligns();
 
     var data = this.calculation.getOutputAlign();
-    console.log(data);
     ObjectOpenAlign.createMatrix(data);
     localStorage.matrix = JSON.stringify(data);
 };
 
 function start() {
-//	clearInterval(refreshIntervalStart);
     ObjectOpenAlign.createAreaPossibility();
     ProcessOpenAlign.startProcess();
 
@@ -469,6 +499,7 @@ function start() {
     });
 
     $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 10);
+    $("#matrix").width($('body').width() - 260);
 
 }
 
@@ -489,8 +520,12 @@ $(function () {
         console.log("Testes" + this);
     });
 
-    document.oncontextmenu = EventOpenAlign.oncontextmenu;
+    $("#saveNew").click(function () {
+        EventOpenAlign.salveParameterCss(JSON.stringify(JSON.parse($("#idParameter").text())));
+    });
 
+    document.oncontextmenu = EventOpenAlign.oncontextmenu;
+    EventOpenAlign.getParameterCss();
 });
 
 i18n.init(function (t) {

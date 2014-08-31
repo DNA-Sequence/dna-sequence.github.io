@@ -6,7 +6,7 @@
     <script src="js/libs/jquery-1.10.1.js"></script>
     <script src="js/libs/bootstrap.js"></script>
     <script src="js/libs/i18next-1.7.3.js"></script>
-
+    <script src="js/libs/handlebars-v1.3.0.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/openAlign.css">
@@ -23,6 +23,9 @@
 			<p class="navbar-text navbar-right">&nbsp;</p>
 
 	      	<ul class="nav navbar-nav navbar-right">
+                <button id="btnParameter" type="button" class="btn btn-default navbar-btn navbar-header" data-toggle="modal" data-target="#pageParameter">
+                    <w data-i18n="openAligh.PARAMETER" ></w>
+                </button>
 				<li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-i18n="openAligh.SCALE"><b class="caret"></b></a>
 		          <ul class="dropdown-menu">
@@ -42,12 +45,12 @@
         <table width="100%">
             <tr>
                 <td id="trMatrix" style="overflow: scroll !important;" >
-                    <div style="width: 200px; min-width: 200px;  max-width: 200px;" id="matrix">
+                    <div style="overflow: auto !important;" id="matrix">
                         <svg id=test>
                         </svg>
                     </div>
                 </td>
-                <td width="250px" height="100px">
+                <td id="tdPossibilityResult" width="250px">
                     <div id="possibilityResult" class="scores">
                         <p data-i18n="openAligh.NEW_MANUAL" onclick="EventOpenAlign.clickPossibilityManual()"></p>
                     </div>
@@ -99,7 +102,25 @@
             </div>
         </div>
     </div>
-	
-
+    <div id="pageParameter" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 data-i18n="openAligh.PARAMETER" class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <pre contentEditable="true" id="idParameter" class="prettyprint">
+                        </pre>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-i18n="openAligh.Close"></button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id='saveNew' data-i18n="openAligh.Save"></button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

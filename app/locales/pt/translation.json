@@ -32,6 +32,8 @@
         "ResultAlign": "Resultado alinhamento",
         "DetailNode" : "Detalhe Elemento",
         "Close": "Fechar",
-        "Save": "Salvar"
+        "Save": "Salvar",
+        "ShowAllPaths" : "Mostrar todos os caminhos",
+        "PARAMETER" : "Parametros"
     }
 }

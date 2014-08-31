@@ -32,6 +32,8 @@
         "ResultAlign": "RESULT ALIGN",
         "DetailNode" : "Detail Node",
         "Close": "Close",
-        "Save": "Save"
+        "Save": "Save",
+        "ShowAllPaths" : "Show all paths",
+        "PARAMETER" : "Parameter"
     }
 }

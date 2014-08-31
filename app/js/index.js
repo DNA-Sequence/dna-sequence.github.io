@@ -1,38 +1,3 @@
-//requirejs(["js/libs/prototype.js",
-//           "js/dna/beans/enuns.js",
-//           "js/dna/beans/InputAlign.js",
-//           "js/dna/beans/InputAlignGlobalLocal.js",
-//           "js/dna/beans/Matrix.js",
-//           "js/dna/beans/Node.js",
-//           "js/dna/beans/OutputAlign.js",
-//           "js/dna/beans/OutputResultAlign.js",
-//           "js/dna/util/StringBuffer.js",
-//           "js/dna/formulas/Calculation.js",
-//           "js/dna/formulas/AbstractCalculation.js",
-//           "js/dna/formulas/CalculationFactory.js",
-//           "js/dna/formulas/CalculationGlobal.js",
-//           "js/dna/formulas/CalculationLocal.js",
-//           "js/dna/formulas/NodeController.js",
-//           "js/dna/formulas/OrganizeNode.js"
-//    ]);
-
-
-//function InputAlignGlobalLocal() {
-//	this.date = formattedDate();
-//}
-//
-//InputAlignGlobalLocal.prototype = {
-//	id : 0,
-//	seq : null,
-//	sequenceA : null,
-//	sequenceB : null,
-//	typeElement : null,
-//	methodSequencing : null,
-//	date : null,
-//	gap : null,
-//	match : null,
-//	misMatch : null
-//};
 
 function formattedDate(date) {
     var d = new Date(date || Date.now()), month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();
@@ -65,16 +30,20 @@ $(function () {
     });
 
     $('#btnDELETE').click(function () {
-        $('#listAlign input:checked').each(function () {
-            /** type Array */
-            var tableAlign = openAlign();
-            tableAlign.splice(parseInt($(this).val(), 10), 1);
-            refreshList(tableAlign);
-        });
+        if ($('#listAlign input:checked:first').val()) {
+            $('#listAlign input:checked').each(function () {
+                /** type Array */
+                var tableAlign = openAlign();
+                tableAlign.splice(parseInt($(this).val(), 10), 1);
+                refreshList(tableAlign);
+            });
+        }
     });
 
     $('#btnOPEN').click(function () {
-        window.location.href = 'openAlign.html#' + $('#listAlign input:checked:first').val();
+        if ($('#listAlign input:checked:first').val()) {
+            window.location.href = 'openAlign.html#' + $('#listAlign input:checked:first').val();
+        }
     });
 
     $('#checkGlobal').click(function () {
@@ -183,6 +152,5 @@ function findNextAlign(tableAlign) {
     } else {
         return 0;
     }
-
 
 }
