@@ -1,11 +1,27 @@
+/**
+ *
+ * @type {widthDefault}
+ */
 var widthDefault = null;
 
+/**
+ *
+ * @constructor
+ */
 var ObjectOpenAlign = function () {
 };
 
+
+/**
+ * @type {Align}
+ */
 ObjectOpenAlign.Align = function () {
 };
 
+/**
+ *
+ * @type {{name: string, connect: null, node: null, nodeBack: null, dataRetorn: null, result: null}}
+ */
 ObjectOpenAlign.Align.prototype = {
     name: "",
     connect: null,
@@ -15,16 +31,36 @@ ObjectOpenAlign.Align.prototype = {
     result: null
 };
 
+/**
+ *
+ * @type {Array}
+ */
 ObjectOpenAlign.listAlign = new Array();
+/**
+ *
+ * @type {dna.OutputResultAlign.nodes}
+ */
 ObjectOpenAlign.nodes = null;
+/**
+ *
+ * @type {ObjectOpenAlign.Align}
+ */
 ObjectOpenAlign.alignCurrent = null;
 
+/**
+ *
+ * @param id
+ * @returns {dna.OutputResultAlign}
+ */
 ObjectOpenAlign.openAlign = function (id) {
     if (localStorage.matrixAligns) {
         return JSON.parse(localStorage.matrixAligns)[parseInt(id, 10)];
     }
 };
 
+/**
+ * @description createAreaPossibility
+ */
 ObjectOpenAlign.createAreaPossibility = function () {
     var possibilityResult = document.getElementById('possibilityResult');
     possibilityResult.appendChild(this.createFieldPossibility([ 'N', 'W', 'NW' ], "up-left-diagonal: "));
@@ -35,12 +71,20 @@ ObjectOpenAlign.createAreaPossibility = function () {
     possibilityResult.appendChild(this.createFieldPossibility([ 'NW', 'W', 'N' ], "diagonal-left-up: "));
 };
 
+
+/**
+ *
+ * @param connect
+ * @param text
+ * @returns {HTMLElement|*}
+ */
 ObjectOpenAlign.createFieldPossibility = function (connect, text) {
     var htmlP = document.createElement("p");
     htmlP.innerHTML = text;
     var align = this.createAlign(connect, text);
 
     htmlP.onclick = function () {
+        EventOpenAlign.elementManualCurrent = null;
         EventOpenAlign.clickFieldPossibility(align);
     };
 
@@ -53,6 +97,12 @@ ObjectOpenAlign.createFieldPossibility = function (connect, text) {
     return htmlP;
 };
 
+/**
+ *
+ * @param connect
+ * @param name
+ * @returns {ObjectOpenAlign.Align}
+ */
 ObjectOpenAlign.createAlign = function (connect, name) {
     var align = new this.Align();
     align.connect = connect;
@@ -61,6 +111,10 @@ ObjectOpenAlign.createAlign = function (connect, name) {
     return align;
 };
 
+/**
+ *
+ * @param {dna.OutputResultAlign}
+ */
 ObjectOpenAlign.createMatrix = function (data) {
     var matrix = null;
 
@@ -112,6 +166,11 @@ ObjectOpenAlign.createMatrix = function (data) {
 
 };
 
+/**
+ *
+ * @param s
+ * @returns {DocumentFragment|*}
+ */
 ObjectOpenAlign.parseSVG = function (s) {
     var div = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
     div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg">' + s + '</svg>';
@@ -122,6 +181,12 @@ ObjectOpenAlign.parseSVG = function (s) {
     return frag;
 };
 
+/**
+ *
+ * @param resultSequenceA
+ * @param resultSequenceB
+ * @returns {string}
+ */
 ObjectOpenAlign.mountTableResult = function (resultSequenceA, resultSequenceB) {
     var htmlStr = "";
     htmlStr += "<tbody>";
@@ -148,6 +213,10 @@ ObjectOpenAlign.mountTableResult = function (resultSequenceA, resultSequenceB) {
     return htmlStr;
 };
 
+/**
+ *
+ * @param rect
+ */
 ObjectOpenAlign.verifyNode = function (rect) {
     var align = this.alignCurrent;
 
@@ -157,34 +226,62 @@ ObjectOpenAlign.verifyNode = function (rect) {
 
         var node = this.nodes[x][y];
 
+        if (ProcessOpenAlign.calculation.methodSequencing === dna.MethodSequencing.LOCAL) {
+            if (!align.nodeBack) {
+                align.nodeBack = node;
+            }
+        }
+
         align.dataRetorn = ProcessOpenAlign.calculation.nodeVicinity(align.dataRetorn, align.nodeBack, node);
         align.nodeBack = node;
     }
 
-    var nodesC = align.dataRetorn.arrayNode;
 
-    var nodesAlign = align.dataRetorn.arrayNodeAlign;
+    var nodesC = null;
 
+    if (align.dataRetorn.arrayNode) {
+        nodesC = align.dataRetorn.arrayNode;
+    }
+
+
+    var nodesAlign = null;
+
+    if (align.dataRetorn.arrayNodeAlign) {
+        nodesAlign = align.dataRetorn.arrayNodeAlign;
+    }
+
+    $("#matrix rect").attr('class', 'noAlign');
     $("#matrix rect[cand='true']").attr('class', 'alignCandidate');
+
 
     $("#tableResult").html(ObjectOpenAlign.mountTableResult(align.dataRetorn.sbSeqA.toString(), align.dataRetorn.sbSeqB.toString()));
 
-    for (var i = 0; i < nodesC.length; i++) {
-        var nodeC = nodesC[i];
-        $("#matrix rect[vx=" + nodeC.x + "][vy=" + nodeC.y + "]").attr('class', 'alignCandidateSelect');
+    if (nodesC) {
+        for (var i = 0; i < nodesC.length; i++) {
+            var nodeC = nodesC[i];
+            $("#matrix rect[vx=" + nodeC.x + "][vy=" + nodeC.y + "]").attr('class', 'alignCandidateSelect');
+        }
     }
 
-    for (i = 0; i < nodesAlign.length; i++) {
-        var nodeAlign = nodesAlign[i];
-        $("#matrix rect[vx=" + nodeAlign.x + "][vy=" + nodeAlign.y + "]").attr('class', 'alignSelect');
+    if (nodesAlign) {
+        for (i = 0; i < nodesAlign.length; i++) {
+            var nodeAlign = nodesAlign[i];
+            $("#matrix rect[vx=" + nodeAlign.x + "][vy=" + nodeAlign.y + "]").attr('class', 'alignSelect');
+        }
     }
 
 
     $(rect).attr('class', 'alignSelectNow');
 
+    EventOpenAlign.updateScoreManual(align.dataRetorn.score);
+
     EventOpenAlign.resetScrollMatrix();
 };
 
+/**
+ *
+ * @param element
+ */
 ObjectOpenAlign.openDetailRect = function (element) {
     var x = element.getAttribute("vx");
     var y = element.getAttribute("vy");
@@ -226,10 +323,37 @@ ObjectOpenAlign.openDetailRect = function (element) {
 
 };
 
+/**
+ *
+ * @constructor
+ */
 var EventOpenAlign = {
 
 };
 
+/**
+ *
+ * @type {HTMLElement|*}
+ */
+EventOpenAlign.elementManualCurrent = null;
+
+/**
+ * updateScoreManual
+ */
+EventOpenAlign.updateScoreManual = function (score) {
+
+    if (this.elementManualCurrent) {
+        var num = this.elementManualCurrent.getAttribute('num');
+        this.elementManualCurrent.setAttribute('score', score);
+
+        this.elementManualCurrent.innerHTML = "Manual " + num + ": " + score;
+    }
+}
+
+/**
+ *
+ * @param {dna.OutputResultAlign}
+ */
 EventOpenAlign.clickFieldPossibility = function (align) {
     $("#matrix rect[cand='true']").attr('class', 'alignCandidate');
 
@@ -247,6 +371,10 @@ EventOpenAlign.clickFieldPossibility = function (align) {
 
 };
 
+/**
+ *
+ * @param value
+ */
 EventOpenAlign.scaleMatrix = function (value) {
     $('#matrix svg').each(function () {
         $(this).attr("width", (40 + ($(this).attr('vwidth') * value))).attr("height", (100 + ($(this).attr('vheight') * value)));
@@ -297,10 +425,19 @@ EventOpenAlign.scaleMatrix = function (value) {
     $('.valueText').css('font-size', value / 2);
 };
 
+/**
+ *
+ * @param {HTMLElement}
+ */
 EventOpenAlign.clickElementText = function (ele) {
+
     this.clickElementRect($("#matrix rect[vx=" + ele.getAttribute("vx") + "][vy=" + ele.getAttribute("vy") + "]")[0]);
 };
 
+/**
+ *
+ * @param {HTMLElement}
+ */
 EventOpenAlign.clickElementRect = function (ele) {
 
     if ($(ele).is(".alignCandidateSelect")) {
@@ -312,16 +449,27 @@ EventOpenAlign.clickElementRect = function (ele) {
 
 };
 
+/**
+ * @description clickPossibilityManual
+ */
 EventOpenAlign.clickPossibilityManual = function () {
 
     var p = document.createElement("p");
-    p.innerHTML = "Manual " + (ObjectOpenAlign.listAlign.length + 1) + ": ";
+    p.setAttribute('num', (ObjectOpenAlign.listAlign.length + 1));
+    p.setAttribute('score', 0);
+
+    p.innerHTML = "Manual " + (ObjectOpenAlign.listAlign.length + 1) + ": 0";
 
     var align = new ObjectOpenAlign.Align();
     align.name = p.innerHTML;
     ObjectOpenAlign.listAlign.push(align);
+    EventOpenAlign.elementManualCurrent = p;
+    $("#matrix rect").attr('class', 'noAlign');
+    $("#matrix rect[cand='true']").attr('class', 'alignCandidate');
+
 
     p.onclick = function () {
+        EventOpenAlign.elementManualCurrent = p;
         ObjectOpenAlign.alignCurrent = align;
         ObjectOpenAlign.verifyNode(null);
     };
@@ -369,6 +517,9 @@ EventOpenAlign.clickPossibilityManual = function () {
 
 };
 
+/**
+ * @description resetScrollMatrix
+ */
 EventOpenAlign.resetScrollMatrix = function () {
     if ($(this).is(":hidden")) {
         $("#matrix").width($(".row").width() - 20);
@@ -387,6 +538,11 @@ EventOpenAlign.resetScrollMatrix = function () {
     elemMatrix.scrollLeft = eScrollLeft;
 };
 
+/**
+ *
+ * @param mouseEvent
+ * @returns {boolean}
+ */
 EventOpenAlign.oncontextmenu = function (mouseEvent) {
     var element = mouseEvent.toElement;
 
@@ -408,6 +564,9 @@ EventOpenAlign.oncontextmenu = function (mouseEvent) {
     return true;
 };
 
+/**
+ *  @description getParameterCss
+ */
 EventOpenAlign.getParameterCss = function () {
 
     $.get(
@@ -436,6 +595,10 @@ EventOpenAlign.getParameterCss = function () {
 
 };
 
+/**
+ *
+ * @param script
+ */
 EventOpenAlign.salveParameterCss = function (script) {
 
     localStorage.parameterCss = script;
@@ -443,13 +606,25 @@ EventOpenAlign.salveParameterCss = function (script) {
     this.getParameterCss();
 };
 
-
+/**
+ *
+ * @constructor
+ */
 var ProcessOpenAlign = {
 
 };
 
+/**
+ *
+ * @type {dna.Calculation}
+ */
 ProcessOpenAlign.calculation = null;
 
+/**
+ *
+ * @param connect
+ * @returns {dna.OutputResultAlign}
+ */
 ProcessOpenAlign.alignPossibility = function (connect) {
     var hash = window.location.hash;
     hash = hash.replace("#", "");
@@ -470,6 +645,9 @@ ProcessOpenAlign.alignPossibility = function (connect) {
     return data;
 };
 
+/**
+ *  @description startProcess
+ */
 ProcessOpenAlign.startProcess = function () {
     var hash = window.location.hash;
     hash = hash.replace("#", "");
@@ -486,6 +664,10 @@ ProcessOpenAlign.startProcess = function () {
     localStorage.matrix = JSON.stringify(data);
 };
 
+
+/**
+ * @description start
+ */
 function start() {
     ObjectOpenAlign.createAreaPossibility();
     ProcessOpenAlign.startProcess();
@@ -528,6 +710,10 @@ $(function () {
     EventOpenAlign.getParameterCss();
 });
 
+/**
+ * @description i18n.init
+ *
+ */
 i18n.init(function (t) {
     $("body").i18n();
 });

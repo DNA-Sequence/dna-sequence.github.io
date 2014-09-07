@@ -1,4 +1,14 @@
+/*!
+ * Dna
+ * Copyright 2014.
+ * Licensed
+ */
 
+/**
+ *
+ * @param date
+ * @returns {string}
+ */
 function formattedDate(date) {
     var d = new Date(date || Date.now()), month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();
 
@@ -89,6 +99,10 @@ $(function () {
 
 });
 
+/**
+ *
+ * @param tableAlignOut
+ */
 function refreshList(tableAlignOut) {
     if (tableAlignOut) {
         localStorage.removeItem("matrixAligns");
@@ -124,6 +138,10 @@ function refreshList(tableAlignOut) {
 
 }
 
+/**
+ *
+ * @returns {tableAlignOut}
+ */
 function openAlign() {
     var ret;
 
@@ -135,6 +153,11 @@ function openAlign() {
     return ret;
 }
 
+/**
+ *
+ * @param tableAlign
+ * @returns {number}
+ */
 function findNextAlign(tableAlign) {
 
     var value;
