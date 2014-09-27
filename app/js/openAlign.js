@@ -368,7 +368,7 @@ EventOpenAlign.clickFieldPossibility = function (align) {
 
     $("#tableResult").html(ObjectOpenAlign.mountTableResult(align.result.resultSequenceA, align.result.resultSequenceB));
 
-    $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 10);
+    $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 80);
     $("#matrix").width($('body').width() - 260);
 
 };
@@ -658,6 +658,11 @@ ProcessOpenAlign.startProcess = function () {
     var inputAlignResult = ObjectOpenAlign.openAlign(hash);
 
     delete inputAlignResult.date;
+
+    inputAlignResult.arrayMisMatch = new Array();
+
+    inputAlignResult.arrayMisMatch["A-C"] = 10;
+
 
     this.calculation = dna.CalculationFactory.createCalculation(inputAlignResult);
     this.calculation.calculationNode();

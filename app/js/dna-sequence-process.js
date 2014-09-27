@@ -192,14 +192,14 @@ window.dna.InputAlign.prototype = {
 
     /**
      * @global
+     * @extends {InputAlign}
      * @constructor
-     * @type {InputAlign}
      */
     window.dna.InputAlignGlobalLocal = window.dna.InputAlign;
 
     /**
      * @global
-     * @memberOf InputAlignGlobalLocal
+     * @memberOf window.dna.InputAlignGlobalLocal
      * @instance
      * @type {InputAlign}
      */
@@ -221,7 +221,7 @@ window.dna.InputAlign.prototype = {
     window.dna.InputAlignGlobalLocal.prototype.match = null;
     /**
      * @global
-     * @memberOf InputAlignGlobalLocal
+     * @memberOf window.dna.InputAlignGlobalLocal
      * @instance
      * @type {int}
      */
@@ -229,16 +229,12 @@ window.dna.InputAlign.prototype = {
 
     /**
      * @global
-     * @memberOf InputAlignGlobalLocal
+     * @memberOf window.dna.InputAlignGlobalLocal
      * @instance
      * @type {Array}
      */
     window.dna.InputAlignGlobalLocal.prototype.arrayMisMatch = null;
 
-    /**
-     *
-     * @type {InputAlignGlobalLocal}
-     */
 //    dna.InputAlignGlobalLocal = InputAlignGlobalLocal;
 
 //})(window, window.dna);
@@ -633,9 +629,7 @@ window.dna.Calculation = function () {
 };
 
 /**
- * @global
  * @memberOf Calculation
- * @instance
  * @description getOutputAlign
  */
 window.dna.Calculation.prototype.getOutputAlign = function () {
@@ -643,9 +637,7 @@ window.dna.Calculation.prototype.getOutputAlign = function () {
 };
 
 /**
- * @global
  * @memberOf Calculation
- * @instance
  * @description getOutputResultAlign
  */
 window.dna.Calculation.prototype.getOutputResultAlign = function () {
@@ -653,9 +645,7 @@ window.dna.Calculation.prototype.getOutputResultAlign = function () {
 };
 
 /**
- * @global
  * @memberOf Calculation
- * @instance
  * @description setInputResultAlign
  */
 window.dna.Calculation.prototype.setInputResultAlign = function () {
@@ -663,9 +653,7 @@ window.dna.Calculation.prototype.setInputResultAlign = function () {
 };
 
 /**
- * @global
  * @memberOf Calculation
- * @instance
  * @description calculationNode
  */
 window.dna.Calculation.prototype.calculationNode = function () {
@@ -673,9 +661,7 @@ window.dna.Calculation.prototype.calculationNode = function () {
 };
 
 /**
- * @global
  * @memberOf Calculation
- * @instance
  * @description findAligns
  */
 window.dna.Calculation.prototype.findAligns = function () {
@@ -683,9 +669,7 @@ window.dna.Calculation.prototype.findAligns = function () {
 };
 
 /**
- * @global
  * @memberOf Calculation
- * @instance
  * @description findAlign
  */
 window.dna.Calculation.prototype.findAlign = function () {
@@ -693,9 +677,7 @@ window.dna.Calculation.prototype.findAlign = function () {
 };
 
 /**
- * @global
  * @memberOf Calculation
- * @instance
  * @description nodeVicinity
  */
 window.dna.Calculation.prototype.nodeVicinity = function () {
@@ -703,9 +685,7 @@ window.dna.Calculation.prototype.nodeVicinity = function () {
 };
 
 /**
- * @global
  * @memberOf Calculation
- * @instance
  * @description nodeDetail
  */
 window.dna.Calculation.prototype.nodeDetail = function () {
@@ -713,16 +693,11 @@ window.dna.Calculation.prototype.nodeDetail = function () {
 };
 
 /**
- * @global
  * @memberOf Calculation
- * @instance
  * @type {MethodSequencing}
  */
 window.dna.Calculation.prototype.methodSequencing = null;
 
-/**
- * @type {Calculation}
- */
 //    dna.Calculation = Calculation;
 
 //})(window, window.dna);
@@ -893,42 +868,42 @@ window.dna.AbstractCalculation = function (_inputAlign) {
 };
 
 /**
- *
  * @type {Calculation}
  */
 window.dna.AbstractCalculation.prototype = new window.dna.Calculation();
 
 /**
- *
  * @type {window.dna.AbstractCalculation}
  */
 window.dna.AbstractCalculation.prototype.constructor = window.dna.AbstractCalculation;
 
 /**
  *
- * @returns {null|*|AbstractCalculation.outputAlign}
+ * @memberOf AbstractCalculation
+ * @returns {OutputAlign}
  */
 window.dna.AbstractCalculation.prototype.getOutputAlign = function () {
     return this.outputAlign;
 };
 
 /**
- *
- * @returns {null|*|window.dna.AbstractCalculation.outputResultAlign}
+ * @memberOf AbstractCalculation
+ * @returns {OutputResultAlign}
  */
 window.dna.AbstractCalculation.prototype.getOutputResultAlign = function () {
     return this.outputResultAlign;
 };
 
 /**
- *
- * @param _inputResultAlign
+ * @memberOf AbstractCalculation
+ * @param {InputResultAlign} _inputResultAlign
  */
 window.dna.AbstractCalculation.prototype.setInputResultAlign = function (_inputResultAlign) {
     this.inputResultAlign = _inputResultAlign;
 };
 
 /**
+ * @memberOf AbstractCalculation
  * @description calculationNode
  */
 window.dna.AbstractCalculation.prototype.calculationNode = function () {
@@ -940,10 +915,16 @@ window.dna.AbstractCalculation.prototype.calculationNode = function () {
     this.outputAlign.matrixs = list;
 };
 
+/**
+ * @memberOf AbstractCalculation
+ */
 window.dna.AbstractCalculation.prototype.findAligns = function () {
 
 };
 
+/**
+ * @memberOf AbstractCalculation
+ */
 window.dna.AbstractCalculation.prototype.findAlign = function () {
 
     var listNode = [];
@@ -978,7 +959,7 @@ window.dna.AbstractCalculation.prototype.findAlign = function () {
 };
 
 /**
- *
+ * @memberOf AbstractCalculation
  * @param nodeController
  * @returns {Node}
  */
@@ -1012,6 +993,7 @@ window.dna.AbstractCalculation.prototype.findAlignsNode = function (nodeControll
 };
 
 /**
+ *  @memberOf AbstractCalculation
  * @description setGaps
  *
  */
@@ -1047,6 +1029,7 @@ window.dna.AbstractCalculation.prototype.setGaps = function () {
 
 /**
  *
+ * @memberOf AbstractCalculation
  * @param dataRetorn
  * @param {Node} nodeOld
  * @param {Node} node
@@ -1112,6 +1095,7 @@ window.dna.AbstractCalculation.prototype.nodeVicinity = function (dataRetorn, no
 
 /**
  *
+ * @memberOf AbstractCalculation
  * @param node
  * @returns {NodeDetail}
  */
@@ -1133,14 +1117,40 @@ window.dna.AbstractCalculation.prototype.nodeDetail = function (node) {
     nodeDetail.nodeCalcW = this.getCalcNode(nodeController.nodeW, this.gap);
 
 
-
     if (node.charSeqA === node.charSeqB) {
         nodeDetail.nodeCalcNW = this.getCalcNode(nodeController.nodeNW, this.match);
     } else {
-        nodeDetail.nodeCalcNW = this.getCalcNode(nodeController.nodeNW, this.misMatch);
+//        nodeDetail.nodeCalcNW = this.getCalcNode(nodeController.nodeNW, this.misMatch);
+        nodeDetail.nodeCalcNW = this.getCalcNode(nodeController.nodeNW, this.getArrayMisMatch(node.charSeqA, node.charSeqB));
     }
 
     return nodeDetail;
+};
+
+
+window.dna.AbstractCalculation.prototype.getArrayMisMatch = function (charA, charB) {
+    /**
+     * @type {window.dna.InputAlignGlobalLocal}
+     */
+    var arrayMisMatch = this.inputAlign.arrayMisMatch;
+
+    if (arrayMisMatch) {
+        if (arrayMisMatch[charA + "-" + charB]) {
+            return arrayMisMatch[charA + "-" + charB];
+        }
+    }
+
+    return this.misMatch;
+};
+
+/**
+ * @memberOf AbstractCalculation
+ * @param {int} value
+ * @param {char} charA
+ * @param {char} charB
+ */
+window.dna.AbstractCalculation.prototype.getValueArrayMisMatch = function (value, charA, charB) {
+    return value + this.getArrayMisMatch(charA, charB);
 };
 
 
@@ -1266,8 +1276,11 @@ window.dna.CalculationGlobal = function (_inputAlign) {
             if (_nodeController.valueA === _nodeController.valueB) {
                 valueNW = nnw.getNode().value + this.match;
             } else {
-                valueNW = nnw.getNode().value + this.misMatch;
+//                valueNW = nnw.getNode().value + this.misMatch;
+                valueNW = window.dna.AbstractCalculation.prototype.getValueArrayMisMatch.call(this, nnw.getNode().value, _nodeController.valueA, _nodeController.valueB);
             }
+
+
 
             if (valueN >= valueNW && valueN >= valueW) {
                 connecteds.push(Connected.N);
@@ -1424,8 +1437,10 @@ window.dna.CalculationSemiGlobal = function (_inputAlign) {
             if (_nodeController.valueA === _nodeController.valueB) {
                 valueNW = nnw.getNode().value + this.match;
             } else {
-                valueNW = nnw.getNode().value + this.misMatch;
+//                valueNW = nnw.getNode().value + this.misMatch;
+                valueNW = window.dna.AbstractCalculation.prototype.getValueArrayMisMatch.call(this, nnw.getNode().value, _nodeController.valueA, _nodeController.valueB);
             }
+
 
             if (valueN >= valueNW && valueN >= valueW) {
                 connecteds.push(Connected.N);
@@ -1672,7 +1687,8 @@ window.dna.CalculationLocal = function (_inputAlign) {
         if (_nodeController.valueA === _nodeController.valueB) {
             valueNW = nnw.getNode().value + this.match;
         } else {
-            valueNW = nnw.getNode().value + this.misMatch;
+            valueNW = window.dna.AbstractCalculation.prototype.getValueArrayMisMatch.call(this, nnw.getNode().value, _nodeController.valueA, _nodeController.valueB);
+//            valueNW = nnw.getNode().value + this.misMatch;
         }
 
         if (valueNW < 0) {
