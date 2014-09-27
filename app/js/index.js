@@ -30,12 +30,29 @@ $(function () {
 
     $("#gapLocal").hide();
     $("#gapGlobal").hide();
+    $("#gapSemiGlobal").hide();
+
+    $('#checkGlobal').click(function () {
+        if ($(this).is(':checked')) {
+            $("#gapGlobal").show();
+        } else {
+            $("#gapGlobal").hide();
+        }
+    });
 
     $('#checkLocal').click(function () {
         if ($(this).is(':checked')) {
             $("#gapLocal").show();
         } else {
             $("#gapLocal").hide();
+        }
+    });
+
+    $('#checkSemiGlobal').click(function () {
+        if ($(this).is(':checked')) {
+            $("#gapSemiGlobal").show();
+        } else {
+            $("#gapSemiGlobal").hide();
         }
     });
 
@@ -53,14 +70,6 @@ $(function () {
     $('#btnOPEN').click(function () {
         if ($('#listAlign input:checked:first').val()) {
             window.location.href = 'openAlign.html#' + $('#listAlign input:checked:first').val();
-        }
-    });
-
-    $('#checkGlobal').click(function () {
-        if ($(this).is(':checked')) {
-            $("#gapGlobal").show();
-        } else {
-            $("#gapGlobal").hide();
         }
     });
 
@@ -91,6 +100,16 @@ $(function () {
             line.id = findNextAlign(tableAlign);
             tableAlign.push(JSON.parse(JSON.stringify(line)));
         }
+
+        if ($('#checkSemiGlobal').is(':checked')) {
+            line.methodSequencing = "SEMIGLOBAL";
+            line.gap = $("#SGgap").val();
+            line.match = $("#SGmatch").val();
+            line.misMatch = $("#SGmismatch").val();
+            line.id = findNextAlign(tableAlign);
+            tableAlign.push(JSON.parse(JSON.stringify(line)));
+        }
+
 
         refreshList(tableAlign);
     });

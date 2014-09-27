@@ -226,7 +226,7 @@ ObjectOpenAlign.verifyNode = function (rect) {
 
         var node = this.nodes[x][y];
 
-        if (ProcessOpenAlign.calculation.methodSequencing === dna.MethodSequencing.LOCAL) {
+        if (ProcessOpenAlign.calculation.methodSequencing === dna.MethodSequencing.LOCAL || ProcessOpenAlign.calculation.methodSequencing === dna.MethodSequencing.SEMIGLOBAL) {
             if (!align.nodeBack) {
                 align.nodeBack = node;
             }
@@ -234,6 +234,8 @@ ObjectOpenAlign.verifyNode = function (rect) {
 
         align.dataRetorn = ProcessOpenAlign.calculation.nodeVicinity(align.dataRetorn, align.nodeBack, node);
         align.nodeBack = node;
+    } else {
+        align.dataRetorn = ProcessOpenAlign.calculation.nodeVicinity(null, null, null);
     }
 
 
@@ -502,7 +504,9 @@ EventOpenAlign.clickPossibilityManual = function () {
                 node = nodes[nodes.length - 1][i];
                 $("#matrix rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignCandidateSelect');
             }
-
+        } else if (ProcessOpenAlign.calculation.methodSequencing === dna.MethodSequencing.SEMIGLOBAL) {
+            var node = null;
+            ObjectOpenAlign.verifyNode();
         }
 
         var elemMatrix = document.getElementById('matrix');
@@ -531,7 +535,7 @@ EventOpenAlign.resetScrollMatrix = function () {
     var eScrollTop = elemMatrix.scrollTop;
     var eScrollLeft = elemMatrix.scrollLeft;
 
-    $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 10);
+    $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 80);
     $("#matrix").width($('body').width() - 260);
 
     elemMatrix.scrollTop = eScrollTop;
@@ -680,7 +684,7 @@ function start() {
         history.back();
     });
 
-    $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 10);
+    $("#matrix").height($('body').height() - $(".menuDown").height() - $(".menuUp").height() - 80);
     $("#matrix").width($('body').width() - 260);
 
 }

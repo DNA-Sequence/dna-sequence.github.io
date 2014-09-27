@@ -18,6 +18,7 @@
         "METHOD": "METODO",
         "Global": "Global",
         "Local": "Local",
+        "SemiGlobal" : "Semi Global",
         "Gap": "Gap Penalty",
         "Match": "Match",
         "Mismatch": "Mismatch",
