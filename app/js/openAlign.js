@@ -659,9 +659,8 @@ ProcessOpenAlign.startProcess = function () {
 
     delete inputAlignResult.date;
 
-    inputAlignResult.arrayMisMatch = new Array();
-
-    inputAlignResult.arrayMisMatch["A-C"] = 10;
+//    inputAlignResult.arrayMisMatch = new Array();
+//    inputAlignResult.arrayMisMatch["A-C"] = 10;
 
 
     this.calculation = dna.CalculationFactory.createCalculation(inputAlignResult);

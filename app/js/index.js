@@ -4,6 +4,9 @@
  * Licensed
  */
 
+
+var arrayMismatch = {};
+
 /**
  *
  * @param date
@@ -28,34 +31,6 @@ $(function () {
         $("body").i18n();
     });
 
-    $("#gapLocal").hide();
-    $("#gapGlobal").hide();
-    $("#gapSemiGlobal").hide();
-
-    $('#checkGlobal').click(function () {
-        if ($(this).is(':checked')) {
-            $("#gapGlobal").show();
-        } else {
-            $("#gapGlobal").hide();
-        }
-    });
-
-    $('#checkLocal').click(function () {
-        if ($(this).is(':checked')) {
-            $("#gapLocal").show();
-        } else {
-            $("#gapLocal").hide();
-        }
-    });
-
-    $('#checkSemiGlobal').click(function () {
-        if ($(this).is(':checked')) {
-            $("#gapSemiGlobal").show();
-        } else {
-            $("#gapSemiGlobal").hide();
-        }
-    });
-
     $('#btnDELETE').click(function () {
         if ($('#listAlign input:checked:first').val()) {
             $('#listAlign input:checked').each(function () {
@@ -73,6 +48,15 @@ $(function () {
         }
     });
 
+    $('#btnAdd').click(function () {
+//        tableArray
+        if ($('#valueA').val() && $('#valueB').val() && $('#arraymismatch').val()) {
+            $('#tableArray').append("<tr><td><label>" + $('#valueA').val() + "-" + $('#valueB').val() + "</label></td><td><label>" + $('#arraymismatch').val() + "</label></td></tr>");
+            window.arrayMismatch[$('#valueA').val() + "-" + $('#valueB').val()] = parseInt($('#arraymismatch').val());
+        }
+    });
+
+
     $('#saveNew').click(function () {
         /** type Array */
         var tableAlign = openAlign();
@@ -83,29 +67,26 @@ $(function () {
         line.sequenceA = $("#dsSequenceA").val();
         line.sequenceB = $("#dsSequenceB").val();
 
+        line.gap = $("#gap").val();
+        line.match = $("#match").val();
+        line.misMatch = $("#mismatch").val();
+
+        line.arrayMisMatch = arrayMismatch;
+
         if ($('#checkGlobal').is(':checked')) {
             line.methodSequencing = "GLOBAL";
-            line.gap = $("#Ggap").val();
-            line.match = $("#Gmatch").val();
-            line.misMatch = $("#Gmismatch").val();
             line.id = findNextAlign(tableAlign);
             tableAlign.push(JSON.parse(JSON.stringify(line)));
         }
 
         if ($('#checkLocal').is(":checked")) {
             line.methodSequencing = "LOCAL";
-            line.gap = $("#Lgap").val();
-            line.match = $("#Lmatch").val();
-            line.misMatch = $("#Lmismatch").val();
             line.id = findNextAlign(tableAlign);
             tableAlign.push(JSON.parse(JSON.stringify(line)));
         }
 
         if ($('#checkSemiGlobal').is(':checked')) {
             line.methodSequencing = "SEMIGLOBAL";
-            line.gap = $("#SGgap").val();
-            line.match = $("#SGmatch").val();
-            line.misMatch = $("#SGmismatch").val();
             line.id = findNextAlign(tableAlign);
             tableAlign.push(JSON.parse(JSON.stringify(line)));
         }
