@@ -217,7 +217,7 @@ ObjectOpenAlign.mountTableResult = function (resultSequenceA, resultSequenceB) {
  *
  * @param rect
  */
-ObjectOpenAlign.verifyNode = function (rect) {
+ObjectOpenAlign.verifyNode = function (rect, openManual) {
     var align = this.alignCurrent;
 
     if (rect) {
@@ -235,7 +235,9 @@ ObjectOpenAlign.verifyNode = function (rect) {
         align.dataRetorn = ProcessOpenAlign.calculation.nodeVicinity(align.dataRetorn, align.nodeBack, node);
         align.nodeBack = node;
     } else {
-        align.dataRetorn = ProcessOpenAlign.calculation.nodeVicinity(null, null, null);
+        if(!openManual){
+            align.dataRetorn = ProcessOpenAlign.calculation.nodeVicinity(align.dataRetorn, null, null);
+        }
     }
 
 
@@ -425,6 +427,18 @@ EventOpenAlign.scaleMatrix = function (value) {
     $('#matrix svg text').css('font', value + 'px sans-serif;');
     $('.valueTextCandidate').css('font-size', value / 2);
     $('.valueText').css('font-size', value / 2);
+
+
+    $("#matrix Text").undelegate("dblclick").dblclick(function () {
+        try {
+            ObjectOpenAlign.openDetailRect($("#matrix rect[vx=" + this.getAttribute("vx") + "][vy=" + this.getAttribute("vy") + "]")[0]);
+        } catch (e) {
+        }
+    });
+
+    $("#matrix rect").undelegate("dblclick").dblclick(function () {
+        ObjectOpenAlign.openDetailRect(this);
+    });
 };
 
 /**
@@ -446,7 +460,7 @@ EventOpenAlign.clickElementRect = function (ele) {
         $(".alignSelectNow").attr("class", "alignSelect");
         $(".alignCandidateSelect").attr("class", "alignCandidate");
         $(ele).attr("class", "alignSelectNow");
-        ObjectOpenAlign.verifyNode(ele);
+        ObjectOpenAlign.verifyNode(ele, false);
     }
 
 };
@@ -473,7 +487,7 @@ EventOpenAlign.clickPossibilityManual = function () {
     p.onclick = function () {
         EventOpenAlign.elementManualCurrent = p;
         ObjectOpenAlign.alignCurrent = align;
-        ObjectOpenAlign.verifyNode(null);
+        ObjectOpenAlign.verifyNode(null, true);
     };
 
     setTimeout(function () {
@@ -490,7 +504,7 @@ EventOpenAlign.clickPossibilityManual = function () {
 
             var rect = $("#matrix rect[vx=" + node.x + "][vy=" + node.y + "]").attr('class', 'alignSelectNow');
 
-            ObjectOpenAlign.verifyNode(rect[0]);
+            ObjectOpenAlign.verifyNode(rect[0], false);
 
         } else if (ProcessOpenAlign.calculation.methodSequencing === dna.MethodSequencing.LOCAL) {
             var node = null;
