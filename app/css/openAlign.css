@@ -132,6 +132,11 @@ body {
     stroke:black;
 }
 
+.align_Detail_select {
+    stroke:black;
+    fill: gray;
+}
+
 #matrixDetail{
     width: 500px;
     height: 500px;

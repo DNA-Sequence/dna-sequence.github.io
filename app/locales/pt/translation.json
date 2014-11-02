@@ -18,7 +18,7 @@
         "METHOD": "METODO",
         "Global": "Global",
         "Local": "Local",
-        "SemiGlobal" : "Semi Global",
+        "SemiGlobal" : "Semi-global",
         "Gap": "Gap Penalty",
         "Match": "Match",
         "Mismatch": "Mismatch",
@@ -35,6 +35,6 @@
         "Close": "Fechar",
         "Save": "Salvar",
         "ShowAllPaths" : "Mostrar todos os caminhos",
-        "PARAMETER" : "Parametros"
+        "PARAMETER" : "Parâmetros"
     }
 }

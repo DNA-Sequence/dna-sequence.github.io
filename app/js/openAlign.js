@@ -316,6 +316,18 @@ ObjectOpenAlign.openDetailRect = function (element) {
     $('#DetailCalcNW').html(nodeDetail.nodeCalcNW);
     $('#DetailCalcW').html(nodeDetail.nodeCalcW);
 
+
+    $('#DetailSumN').html(nodeDetail.nodeSumN);
+    $('#DetailSumNW').html(nodeDetail.nodeSumNW);
+    $('#DetailSumW').html(nodeDetail.nodeSumW);
+
+    $('#DetailSeqA').html(node.charSeqA);
+    $('#DetailSeqB').html(node.charSeqB);
+
+
+
+
+
     for (var i = 0; i < node.connected.length; i++) {
         $('#DetailConnect' + node.connected[i]).show();
     }

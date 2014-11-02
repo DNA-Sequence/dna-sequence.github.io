@@ -1,4 +1,4 @@
-/*! dna-sequence-process - v0.0.1 - 2014-10-24
+/*! dna-sequence-process - v0.0.1 - 2014-11-02
 * https://github.com/samuelklein/dna-sequence-process
 * Copyright (c) 2014 Samuel A. Klein; Licensed MIT */
 /**
@@ -395,11 +395,25 @@ window.dna.NodeDetail.prototype = {
     nodeCalcNW: null,
     /**
      * @global
-     * @memberOf NodeDetail
+     * @memberOf nodeSumN
      * @instance
      * @type {String}
      */
-    nodeCalcN: null
+    nodeSumN : null,
+    /**
+     * @global
+     * @memberOf nodeSumW
+     * @instance
+     * @type {String}
+     */
+    nodeSumW : null,
+    /**
+     * @global
+     * @memberOf nodeSumNW
+     * @instance
+     * @type {String}
+     */
+    nodeSumNW : null
 };
 /**
  * @global
@@ -998,11 +1012,16 @@ window.dna.AbstractCalculation.prototype.nodeDetail = function (node) {
     nodeDetail.nodeCalcN = this.getCalcNode(nodeController.nodeN, this.gap);
     nodeDetail.nodeCalcW = this.getCalcNode(nodeController.nodeW, this.gap);
 
+    nodeDetail.nodeSumN = "GAP = " + this.gap;
+    nodeDetail.nodeSumW = "GAP = " + this.gap;
+
 
     if (node.charSeqA === node.charSeqB) {
         nodeDetail.nodeCalcNW = this.getCalcNode(nodeController.nodeNW, this.match);
+        nodeDetail.nodeSumNW = "MATCH = " + this.match;
     } else {
         nodeDetail.nodeCalcNW = this.getCalcNode(nodeController.nodeNW, this.getArrayMisMatch(node.charSeqA, node.charSeqB));
+        nodeDetail.nodeSumNW = "MISMATCH = " + this.getArrayMisMatch(node.charSeqA, node.charSeqB);
     }
 
     return nodeDetail;

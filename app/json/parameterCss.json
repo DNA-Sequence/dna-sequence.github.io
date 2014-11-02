@@ -40,6 +40,10 @@
         },
         "align_Detail": {
             "stroke": "black"
+        },
+        "align_Detail_Select": {
+            "stroke": "black",
+            "fill" : "#C5C5C5"
         }
     }
 }
