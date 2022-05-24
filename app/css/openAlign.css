@@ -59,8 +59,8 @@ body {
 }
 
 .align {
-	width:10;
-	height:10;
+	width:20;
+	height:20;
 	fill: #999999;
 	stroke:black;
 	stroke-width: 1px;
