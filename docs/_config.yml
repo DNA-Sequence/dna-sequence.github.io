@@ -1,0 +1,8 @@
+title: Dna-sequence.github.io
+description: Page to DNA-sequence
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-slate
+
+gems:
+  - jekyll-mentions
