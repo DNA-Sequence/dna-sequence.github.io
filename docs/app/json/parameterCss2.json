@@ -1,0 +1,45 @@
+{
+    "color": {
+        "background": "#00e7e7",
+        "row": {
+            "background": "#00e7e7"
+        },
+        "alignCandidate": {
+            "fill": "#ffffff",
+            "background": "#C5C5C5",
+            "stroke": "blue"
+        },
+        "align": {
+            "fill": "#009999",
+            "stroke": "blue"
+        },
+        "noAlign": {
+            "fill": "#00ffff",
+            "stroke": "blue"
+        },
+        "scores": {
+            "background": "#00c5c5",
+            "p": {
+                "background": "gray"
+            }
+        },
+        "alignCandidateSelect": {
+            "fill": "#00ba08",
+            "stroke": "blue",
+            "background": "#C5C5C5"
+        },
+        "alignSelectNow": {
+            "fill": "#005600",
+            "stroke": "blue",
+            "background": "#C5C5C5"
+        },
+        "alignSelect": {
+            "fill": "#00332e",
+            "stroke": "blue",
+            "background": "#00C5C5"
+        },
+        "align_Detail": {
+            "stroke": "blue"
+        }
+    }
+}

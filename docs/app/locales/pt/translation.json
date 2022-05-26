@@ -1,0 +1,40 @@
+{
+    "menu": {
+        "new": "Novo",
+        "open": "Abrir",
+        "delete": "Deletar"
+    },
+    "headAlign": {
+        "Align": "Alinhamento",
+        "Date": "Data",
+        "Type": "Tipo"
+    },
+    "pageNew": {
+        "NewAlign": "Novo Alinhamento",
+        "NUCLEOTIDE": "NUCLEOTIDEOS",
+        "PROTEIN": "PROTEINA",
+        "SequenceA": "Sequencia A",
+        "SequenceB": "Sequencia B",
+        "METHOD": "METODO",
+        "Global": "Global",
+        "Local": "Local",
+        "SemiGlobal" : "Semi-global",
+        "Gap": "Gap Penalty",
+        "Match": "Match",
+        "Mismatch": "Mismatch",
+        "Close": "Fechar",
+        "Save": "Salvar"
+    },
+    "openAligh": {
+        "Back": "Voltar",
+        "SCALE": "Escala",
+        "SCORE": "Score",
+        "NEW_MANUAL": "Novo Manual",
+        "ResultAlign": "Resultado alinhamento",
+        "DetailNode" : "Detalhe Elemento",
+        "Close": "Fechar",
+        "Save": "Salvar",
+        "ShowAllPaths" : "Mostrar todos os caminhos",
+        "PARAMETER" : "Parâmetros"
+    }
+}
